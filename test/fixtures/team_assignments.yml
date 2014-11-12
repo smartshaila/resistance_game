@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  pass: false
+  team_id: 
+  player_assignment_id: 
+
+two:
+  pass: false
+  team_id: 
+  player_assignment_id: 

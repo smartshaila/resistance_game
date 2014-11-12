@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  date: 2014-11-11 16:42:18
+  public_vote: false
+  public_lancelot_switch: false
+
+two:
+  date: 2014-11-11 16:42:18
+  public_vote: false
+  public_lancelot_switch: false

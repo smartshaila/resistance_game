@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Seat number:</strong>
+  <%= @player_assignment.seat_number %>
+</p>
+
+<p>
+  <strong>Game:</strong>
+  <%= @player_assignment.game %>
+</p>
+
+<p>
+  <strong>Player:</strong>
+  <%= @player_assignment.player %>
+</p>
+
+<p>
+  <strong>Role:</strong>
+  <%= @player_assignment.role %>
+</p>
+
+<%= link_to 'Edit', edit_player_assignment_path(@player_assignment) %> |
+<%= link_to 'Back', player_assignments_path %>

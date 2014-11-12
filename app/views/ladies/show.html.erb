@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Mission:</strong>
+  <%= @lady.mission %>
+</p>
+
+<p>
+  <strong>Source:</strong>
+  <%= @lady.source_id %>
+</p>
+
+<p>
+  <strong>Target:</strong>
+  <%= @lady.target_id %>
+</p>
+
+<%= link_to 'Edit', edit_lady_path(@lady) %> |
+<%= link_to 'Back', ladies_path %>

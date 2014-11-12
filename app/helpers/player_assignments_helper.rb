@@ -1,0 +1,2 @@
+module PlayerAssignmentsHelper
+end

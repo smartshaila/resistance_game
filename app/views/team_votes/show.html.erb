@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Approve:</strong>
+  <%= @team_vote.approve %>
+</p>
+
+<p>
+  <strong>Team:</strong>
+  <%= @team_vote.team %>
+</p>
+
+<p>
+  <strong>Player assignment:</strong>
+  <%= @team_vote.player_assignment %>
+</p>
+
+<%= link_to 'Edit', edit_team_vote_path(@team_vote) %> |
+<%= link_to 'Back', team_votes_path %>

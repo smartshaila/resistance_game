@@ -1,0 +1,29 @@
+<h1>Listing ladies</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Mission</th>
+      <th>Source</th>
+      <th>Target</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @ladies.each do |lady| %>
+      <tr>
+        <td><%= lady.mission %></td>
+        <td><%= lady.source_id %></td>
+        <td><%= lady.target_id %></td>
+        <td><%= link_to 'Show', lady %></td>
+        <td><%= link_to 'Edit', edit_lady_path(lady) %></td>
+        <td><%= link_to 'Destroy', lady, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Lady', new_lady_path %>

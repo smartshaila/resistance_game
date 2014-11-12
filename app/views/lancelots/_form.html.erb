@@ -1,0 +1,25 @@
+<%= form_for(@lancelot) do |f| %>
+  <% if @lancelot.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@lancelot.errors.count, "error") %> prohibited this lancelot from being saved:</h2>
+
+      <ul>
+      <% @lancelot.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :switched %><br>
+    <%= f.check_box :switched %>
+  </div>
+  <div class="field">
+    <%= f.label :mission_id %><br>
+    <%= f.text_field :mission_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

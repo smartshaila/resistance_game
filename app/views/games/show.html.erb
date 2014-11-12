@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Date:</strong>
+  <%= @game.date %>
+</p>
+
+<p>
+  <strong>Public vote:</strong>
+  <%= @game.public_vote %>
+</p>
+
+<p>
+  <strong>Public lancelot switch:</strong>
+  <%= @game.public_lancelot_switch %>
+</p>
+
+<%= link_to 'Edit', edit_game_path(@game) %> |
+<%= link_to 'Back', games_path %>

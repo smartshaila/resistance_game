@@ -1,0 +1,31 @@
+<h1>Listing player_assignments</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Seat number</th>
+      <th>Game</th>
+      <th>Player</th>
+      <th>Role</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @player_assignments.each do |player_assignment| %>
+      <tr>
+        <td><%= player_assignment.seat_number %></td>
+        <td><%= player_assignment.game %></td>
+        <td><%= player_assignment.player %></td>
+        <td><%= player_assignment.role %></td>
+        <td><%= link_to 'Show', player_assignment %></td>
+        <td><%= link_to 'Edit', edit_player_assignment_path(player_assignment) %></td>
+        <td><%= link_to 'Destroy', player_assignment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Player assignment', new_player_assignment_path %>

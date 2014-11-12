@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Pass:</strong>
+  <%= @team_assignment.pass %>
+</p>
+
+<p>
+  <strong>Team:</strong>
+  <%= @team_assignment.team %>
+</p>
+
+<p>
+  <strong>Player assignment:</strong>
+  <%= @team_assignment.player_assignment %>
+</p>
+
+<%= link_to 'Edit', edit_team_assignment_path(@team_assignment) %> |
+<%= link_to 'Back', team_assignments_path %>

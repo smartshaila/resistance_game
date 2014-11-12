@@ -1,0 +1,27 @@
+<h1>Listing lancelots</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Switched</th>
+      <th>Mission</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @lancelots.each do |lancelot| %>
+      <tr>
+        <td><%= lancelot.switched %></td>
+        <td><%= lancelot.mission %></td>
+        <td><%= link_to 'Show', lancelot %></td>
+        <td><%= link_to 'Edit', edit_lancelot_path(lancelot) %></td>
+        <td><%= link_to 'Destroy', lancelot, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Lancelot', new_lancelot_path %>

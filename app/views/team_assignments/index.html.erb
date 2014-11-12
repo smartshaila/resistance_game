@@ -1,0 +1,29 @@
+<h1>Listing team_assignments</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Pass</th>
+      <th>Team</th>
+      <th>Player assignment</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @team_assignments.each do |team_assignment| %>
+      <tr>
+        <td><%= team_assignment.pass %></td>
+        <td><%= team_assignment.team %></td>
+        <td><%= team_assignment.player_assignment %></td>
+        <td><%= link_to 'Show', team_assignment %></td>
+        <td><%= link_to 'Edit', edit_team_assignment_path(team_assignment) %></td>
+        <td><%= link_to 'Destroy', team_assignment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Team assignment', new_team_assignment_path %>

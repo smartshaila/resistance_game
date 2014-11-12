@@ -1,0 +1,2 @@
+module LadiesHelper
+end
