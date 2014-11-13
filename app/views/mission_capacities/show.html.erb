@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Player count:</strong>
+  <%= @mission_capacity.player_count %>
+</p>
+
+<p>
+  <strong>Mission number:</strong>
+  <%= @mission_capacity.mission_number %>
+</p>
+
+<p>
+  <strong>Capacity:</strong>
+  <%= @mission_capacity.capacity %>
+</p>
+
+<p>
+  <strong>Fail count:</strong>
+  <%= @mission_capacity.fail_count %>
+</p>
+
+<%= link_to 'Edit', edit_mission_capacity_path(@mission_capacity) %> |
+<%= link_to 'Back', mission_capacities_path %>

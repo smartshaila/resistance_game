@@ -1,0 +1,2 @@
+module RoleRelationshipsHelper
+end

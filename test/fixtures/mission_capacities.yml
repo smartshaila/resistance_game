@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  player_count: 1
+  mission_number: 1
+  capacity: 1
+  fail_count: 1
+
+two:
+  player_count: 1
+  mission_number: 1
+  capacity: 1
+  fail_count: 1
