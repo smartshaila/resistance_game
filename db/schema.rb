@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141113050951) do
+ActiveRecord::Schema.define(version: 20141113175147) do
 
   create_table "factions", force: true do |t|
     t.string   "name"
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 20141113050951) do
     t.boolean  "public_lancelot_switch"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "assassinated_assignment_id"
   end
 
   create_table "ladies", force: true do |t|
@@ -81,12 +82,14 @@ ActiveRecord::Schema.define(version: 20141113050951) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "password"
+    t.string   "password_salt"
   end
 
   create_table "role_relationships", force: true do |t|
     t.integer  "role_id"
     t.integer  "revealed_role_id"
-    t.boolean  "revealed_allegiance"
+    t.boolean  "revealed_faction"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

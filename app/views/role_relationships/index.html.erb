@@ -5,7 +5,7 @@
     <tr>
       <th>Role</th>
       <th>Revealed role</th>
-      <th>Revealed allegiance</th>
+      <th>Revealed faction</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -15,7 +15,7 @@
       <tr>
         <td><%= role_relationship.role_id %></td>
         <td><%= role_relationship.revealed_role_id %></td>
-        <td><%= role_relationship.revealed_allegiance %></td>
+        <td><%= role_relationship.revealed_faction %></td>
         <td><%= link_to 'Show', role_relationship %></td>
         <td><%= link_to 'Edit', edit_role_relationship_path(role_relationship) %></td>
         <td><%= link_to 'Destroy', role_relationship, method: :delete, data: { confirm: 'Are you sure?' } %></td>
