@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141111215328) do
+ActiveRecord::Schema.define(version: 20141113050951) do
 
   create_table "factions", force: true do |t|
     t.string   "name"
@@ -46,10 +46,20 @@ ActiveRecord::Schema.define(version: 20141111215328) do
 
   add_index "lancelots", ["mission_id"], name: "index_lancelots_on_mission_id"
 
+  create_table "mission_capacities", force: true do |t|
+    t.integer  "player_count"
+    t.integer  "mission_number"
+    t.integer  "capacity"
+    t.integer  "fail_count"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "missions", force: true do |t|
     t.integer  "game_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "mission_number"
   end
 
   add_index "missions", ["game_id"], name: "index_missions_on_game_id"
@@ -73,11 +83,20 @@ ActiveRecord::Schema.define(version: 20141111215328) do
     t.datetime "updated_at"
   end
 
+  create_table "role_relationships", force: true do |t|
+    t.integer  "role_id"
+    t.integer  "revealed_role_id"
+    t.boolean  "revealed_allegiance"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "roles", force: true do |t|
     t.string   "name"
     t.integer  "faction_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "description"
   end
 
   add_index "roles", ["faction_id"], name: "index_roles_on_faction_id"

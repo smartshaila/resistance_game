@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  resources :role_relationships
+
+  resources :mission_capacities
+
   resources :lancelots
 
   resources :ladies
