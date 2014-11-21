@@ -2,17 +2,17 @@
 
 <p>
   <strong>Role:</strong>
-  <%= @role_relationship.role_id %>
+  <%= @role_relationship.role.name %>
 </p>
 
 <p>
   <strong>Revealed role:</strong>
-  <%= @role_relationship.revealed_role_id %>
+  <%= @role_relationship.revealed_role.name %>
 </p>
 
 <p>
   <strong>Revealed faction:</strong>
-  <%= @role_relationship.revealed_faction %>
+  <%= @role_relationship.revealed_faction? %>
 </p>
 
 <%= link_to 'Edit', edit_role_relationship_path(@role_relationship) %> |

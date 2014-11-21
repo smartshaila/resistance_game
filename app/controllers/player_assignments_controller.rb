@@ -1,5 +1,5 @@
 class PlayerAssignmentsController < ApplicationController
-  before_action :set_player_assignment, only: [:show, :edit, :update, :destroy]
+  before_action :set_player_assignment, only: [:show, :edit, :update, :destroy, :revealed_info]
 
   # GET /player_assignments
   # GET /player_assignments.json
@@ -59,6 +59,37 @@ class PlayerAssignmentsController < ApplicationController
       format.html { redirect_to player_assignments_url, notice: 'Player assignment was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def revealed_info
+
+
+    # As SQL:
+    # query =
+    # 'select rr.revealed_faction, p.name, f.name
+    # from player_assignments pa1
+    # join games g on pa1.game_id = g.id
+    # join player_assignments pa2 on pa2.game_id = g.id
+    # join roles r1 on pa1.role_id = r1.id
+    # join role_relationships rr on r1.id = rr.role_id
+    # join players p on pa2.player_id = p.id
+    # join roles r2 on rr.revealed_role_id = r2.id and r2.id = pa2.role_id
+    # join factions f on f.id = r2.faction_id
+    # where pa1.id = ?
+    # and pa1.id != pa2.id'
+    #
+    # results = ActiveRecord::Base.connection.execute(query);
+    game_assignments = @player_assignment.game.player_assignments
+
+    @visible_relationships = @player_assignment.role.revealed_roles.map{|relation|
+      found_assignment = game_assignments.find{|a| a.role == relation[:revealed_role]}
+      if found_assignment
+        {
+          player: found_assignment.player,
+          faction: relation[:faction]
+        }
+      end
+    }.compact
   end
 
   private

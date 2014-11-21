@@ -4,5 +4,25 @@ class Game < ActiveRecord::Base
   has_many :missions, dependent: :destroy
   has_many :players, through: :player_assignments
   has_many :roles, through: :player_assignments
+  has_many :teams, through: :missions
 
+  def set_assignments (players, roles)
+    roles.shuffle!
+    players.rotate!(rand(players.size))
+    players.each_with_index { |player,index|
+      p = PlayerAssignment.new
+      p.player_id = player.to_i
+      p.seat_number = index
+      p.role_id = roles[index].to_i
+      p.game = self
+      p.save
+    }
+  end
+
+  def current_king
+    no_of_teams = self.teams.size
+    no_of_players = self.player_assignments.size
+    king_seat = no_of_teams % no_of_players
+    self.player_assignments.where("seat_number = ?", king_seat).first
+  end
 end

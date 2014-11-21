@@ -16,8 +16,8 @@
     <%= f.text_field :name %>
   </div>
   <div class="field">
-    <%= f.label :faction_id %><br>
-    <%= f.text_field :faction_id %>
+    <%= f.label :faction %><br>
+    <%= f.collection_select(:faction_id, Faction.all, :id, :name, prompt: true) %>
   </div>
   <div class="actions">
     <%= f.submit %>

@@ -15,6 +15,7 @@ class RoleRelationshipsController < ApplicationController
   # GET /role_relationships/new
   def new
     @role_relationship = RoleRelationship.new
+    @role_relationship.revealed_faction = true
   end
 
   # GET /role_relationships/1/edit
@@ -69,6 +70,6 @@ class RoleRelationshipsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def role_relationship_params
-      params.require(:role_relationship).permit(:role_id, :revealed_role_id, :revealed_allegiance)
+      params.require(:role_relationship).permit(:role_id, :revealed_role_id, :revealed_faction)
     end
 end

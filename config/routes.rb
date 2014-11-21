@@ -15,7 +15,9 @@ Rails.application.routes.draw do
 
   resources :missions
 
-  resources :player_assignments
+  resources :player_assignments do
+    get 'revealed_info', on: :member
+  end
 
   resources :roles
 

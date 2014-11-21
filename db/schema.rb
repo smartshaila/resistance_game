@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141113175147) do
+ActiveRecord::Schema.define(version: 20141115005925) do
 
   create_table "factions", force: true do |t|
     t.string   "name"
@@ -20,7 +20,6 @@ ActiveRecord::Schema.define(version: 20141113175147) do
   end
 
   create_table "games", force: true do |t|
-    t.datetime "date"
     t.boolean  "public_vote"
     t.boolean  "public_lancelot_switch"
     t.datetime "created_at"
@@ -82,7 +81,7 @@ ActiveRecord::Schema.define(version: 20141113175147) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "password"
+    t.string   "password_hash"
     t.string   "password_salt"
   end
 

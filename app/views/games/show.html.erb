@@ -1,9 +1,20 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Date:</strong>
-  <%= @game.date %>
-</p>
+<table>
+  <tr>
+    <th>Player</th>
+    <th>Seat Number</th>
+  </tr>
+  <% @game.player_assignments.each do |assignment| %>
+    <tr>
+      <td><%= assignment.player.name %></td>
+      <td><%= assignment.seat_number %></td>
+      <td><%= link_to 'Revealed Info', revealed_info_player_assignment_path(assignment) %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p><strong>Current King:</strong> <%= @game.current_king.player.name %></p>
 
 <p>
   <strong>Public vote:</strong>

@@ -1,0 +1,13 @@
+<p>Player: <%= @player_assignment.player.name %><br />
+Role: <%= @player_assignment.role.name %></p>
+
+<table>
+  <tr>
+    <td><strong>Player</strong></td>
+  </tr>
+  <% @visible_relationships.each do |info| %>
+    <tr>
+      <td class="<%= info[:faction].name.downcase unless info[:faction].nil? %>"><%= info[:player].name %></td>
+    </tr>
+  <% end %>
+</table>

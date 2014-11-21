@@ -13,7 +13,7 @@
     <% @roles.each do |role| %>
       <tr>
         <td><%= role.name %></td>
-        <td><%= role.faction %></td>
+        <td><%= role.faction.name %></td>
         <td><%= link_to 'Show', role %></td>
         <td><%= link_to 'Edit', edit_role_path(role) %></td>
         <td><%= link_to 'Destroy', role, method: :delete, data: { confirm: 'Are you sure?' } %></td>

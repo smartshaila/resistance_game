@@ -12,16 +12,16 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :role_id %><br>
-    <%= f.number_field :role_id %>
+    <%= f.label :role %><br>
+    <%= f.collection_select(:role_id, Role.all, :id, :name, prompt: true) %>
   </div>
   <div class="field">
-    <%= f.label :revealed_role_id %><br>
-    <%= f.number_field :revealed_role_id %>
+    <%= f.label :revealed_role %><br>
+    <%= f.collection_select(:revealed_role_id, Role.all, :id, :name, prompt: true) %>
   </div>
   <div class="field">
     <%= f.label :revealed_faction %><br>
-    <%= f.check_box :revealed_faction %>
+    <%= f.check_box :revealed_faction? %>
   </div>
   <div class="actions">
     <%= f.submit %>

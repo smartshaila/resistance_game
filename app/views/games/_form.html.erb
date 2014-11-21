@@ -10,11 +10,6 @@
       </ul>
     </div>
   <% end %>
-
-  <div class="field">
-    <%= f.label :date %><br>
-    <%= f.datetime_select :date %>
-  </div>
   <div class="field">
     <%= f.label :public_vote %><br>
     <%= f.check_box :public_vote %>
@@ -23,6 +18,21 @@
     <%= f.label :public_lancelot_switch %><br>
     <%= f.check_box :public_lancelot_switch %>
   </div>
+  <div id="outer_player_and_role_div">
+    <p>Select Players and Roles:</p>
+    <div id="source_row">
+      <select name='players[]'>
+        <%= options_from_collection_for_select Player.all, 'id', 'name' %>
+      </select>
+      <select name='roles[]'>
+        <%= options_from_collection_for_select Role.all, 'id', 'name' %>
+      </select>
+      <br />
+    </div>
+  </div>
+  <p>
+    <input type="button" onclick="$('#source_row').clone().attr('id', null).appendTo('#outer_player_and_role_div')" value="Add New">
+  </p>
   <div class="actions">
     <%= f.submit %>
   </div>
