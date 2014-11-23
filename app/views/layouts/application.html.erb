@@ -7,13 +7,15 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-<ul>
+<ul id='navigation'>
   <li><%= link_to 'Factions', factions_path %></li>
   <li><%= link_to 'Mission Capacity', mission_capacities_path %></li>
   <li><%= link_to 'Roles', roles_path %></li>
   <li><%= link_to 'Role Relationships', role_relationships_path%></li>
   <li><%= link_to 'Players', players_path%></li>
   <li><%= link_to 'Games', games_path%></li>
+  <li><%= link_to 'Missions', missions_path %></li>
+  <li><%= link_to 'Teams', teams_path %></li>
 </ul>
 <%= yield %>
 

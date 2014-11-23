@@ -25,3 +25,33 @@ body {
 .evil {
   background-color: #FFC0C0;
 }
+
+ul#navigation{
+  list-style-type: none;
+  padding: 0 0 20px 0
+}
+
+ul#navigation li{
+  float: left;
+  margin: 2px 5px 0 5px;
+  padding: 5px;
+  background-color: #EEEEEE;
+}
+
+#navigation a{
+  float: left;
+  display: block;
+  text-decoration: none;
+}
+
+
+/*a {*/
+  /*color: #000;*/
+/*&:visited {*/
+   /*color: #666;*/
+ /*}*/
+/*&:hover {*/
+   /*color: #fff;*/
+   /*background-color: #000;*/
+ /*}*/
+/*}*/

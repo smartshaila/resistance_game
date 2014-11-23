@@ -11,6 +11,14 @@
     </div>
   <% end %>
 
+  <strong>Players on Team:</strong>
+  <br />
+  <% @team.mission.game.player_assignments.each do |pa| %>
+    <%= check_box_tag('team_assignments[]', pa.id, @team.team_assignments.map(&:player_assignment).include?(pa)) %>
+    <%= pa.player.name %>
+    <br />
+  <% end %>
+
   <div class="field">
     <%= f.label :mission_id %><br>
     <%= f.text_field :mission_id %>

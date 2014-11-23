@@ -31,7 +31,9 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-   root 'games#index'
+  root 'games#index'
+
+  get '/teams/:team_id/team_votes/:player_assignment_id/new', to: 'team_votes#new', as: 'vote_on_team'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

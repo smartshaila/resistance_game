@@ -14,6 +14,26 @@
   <% end %>
 </table>
 
+<table>
+  <thead>
+  <tr>
+    <th>Mission Number</th>
+    <th colspan="1"></th>
+  </tr>
+  </thead>
+
+  <br />
+
+  <tbody>
+  <% @game.missions.each do |mission| %>
+    <tr>
+      <td><%= mission.mission_number+1 %></td>
+      <td><%= link_to 'Details', mission %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
 <p><strong>Current King:</strong> <%= @game.current_king.player.name %></p>
 
 <p>

@@ -15,6 +15,8 @@ class TeamVotesController < ApplicationController
   # GET /team_votes/new
   def new
     @team_vote = TeamVote.new
+    @team_vote.team_id = params[:team_id]
+    @team_vote.player_assignment_id = params[:player_assignment_id]
   end
 
   # GET /team_votes/1/edit

@@ -3,7 +3,8 @@
 <table>
   <thead>
     <tr>
-      <th>Game</th>
+      <th>Mission Number</th>
+      <th>Game ID</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -11,7 +12,8 @@
   <tbody>
     <% @missions.each do |mission| %>
       <tr>
-        <td><%= mission.game %></td>
+        <td><%= mission.mission_number+1 %></td>
+        <td><%= mission.game.id %></td>
         <td><%= link_to 'Show', mission %></td>
         <td><%= link_to 'Edit', edit_mission_path(mission) %></td>
         <td><%= link_to 'Destroy', mission, method: :delete, data: { confirm: 'Are you sure?' } %></td>

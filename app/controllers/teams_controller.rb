@@ -40,6 +40,13 @@ class TeamsController < ApplicationController
   # PATCH/PUT /teams/1
   # PATCH/PUT /teams/1.json
   def update
+    @team.team_assignments.destroy_all
+    assigned_players = params[:team_assignments]
+
+    assigned_players.each do |pa|
+      TeamAssignment.create(team: @team, player_assignment_id: pa.to_i)
+    end
+
     respond_to do |format|
       if @team.update(team_params)
         format.html { redirect_to @team, notice: 'Team was successfully updated.' }

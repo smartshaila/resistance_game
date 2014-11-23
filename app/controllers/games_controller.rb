@@ -25,8 +25,8 @@ class GamesController < ApplicationController
   # POST /games.json
   def create
     @game = Game.create(game_params)
-    logger.debug "Params: #{params}"
-    @game.set_assignments(params[:players], params[:roles])
+  # logger.debug "Params: #{params}"
+    @game.game_setup(params[:players], params[:roles])
 
     respond_to do |format|
       if @game.save

@@ -1,9 +1,32 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Mission:</strong>
-  <%= @team.mission %>
-</p>
+<table>
+  <thead>
+  <tr>
+    <th>Team Members</th>
+  </tr>
+  </thead>
 
-<%= link_to 'Edit', edit_team_path(@team) %> |
-<%= link_to 'Back', teams_path %>
+  <tbody>
+  <% @team.team_assignments.each do |a| %>
+    <tr>
+      <td><%= a.player_assignment.player.name %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr>
+      <th>Player Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @team.mission.game.player_assignments.each do |pa| %>
+    <tr>
+      <td><%= link_to pa.player.name, vote_on_team_path(team_id: @team.id, player_assignment_id: pa.id) %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
