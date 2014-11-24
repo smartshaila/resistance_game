@@ -1,5 +1,5 @@
 class PlayerAssignmentsController < ApplicationController
-  before_action :set_player_assignment, only: [:show, :edit, :update, :destroy, :revealed_info]
+  before_action :set_player_assignment, only: [:show, :edit, :update, :destroy, :revealed_info, :game_state]
 
   # GET /player_assignments
   # GET /player_assignments.json
@@ -62,8 +62,6 @@ class PlayerAssignmentsController < ApplicationController
   end
 
   def revealed_info
-
-
     # As SQL:
     # query =
     # 'select rr.revealed_faction, p.name, f.name
@@ -90,6 +88,11 @@ class PlayerAssignmentsController < ApplicationController
         }
       end
     }.compact
+  end
+
+  def game_state
+    @waiting_players = []
+    @mission_status_text = ''
   end
 
   private

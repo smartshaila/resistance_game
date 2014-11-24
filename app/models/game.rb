@@ -1,5 +1,5 @@
 class Game < ActiveRecord::Base
-  belongs_to :assassinated_assignment, :class_name => 'PlayerAssignment'
+  belongs_to :assassinated_assignment, class_name: 'PlayerAssignment'
   has_many :player_assignments, dependent: :destroy
   has_many :missions, dependent: :destroy
   has_many :players, through: :player_assignments
@@ -26,9 +26,17 @@ class Game < ActiveRecord::Base
   end
 
   def current_king
-    no_of_teams = self.teams.select{|t| t.team_assignments.size > 0}.size
+    no_of_teams = self.teams.to_a.count {|t| t.assignments_complete? and t.team_voting_complete? }
     no_of_players = self.player_assignments.size
     king_seat = no_of_teams % no_of_players
     self.player_assignments.where("seat_number = ?", king_seat).first
+  end
+
+  def current_mission
+    self.missions.max_by(&:mission_number)
+  end
+
+  def mission_capacities
+    MissionCapacity.where player_count: self.player_assignments.size
   end
 end

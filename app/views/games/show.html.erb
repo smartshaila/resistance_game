@@ -18,6 +18,8 @@
   <thead>
   <tr>
     <th>Mission Number</th>
+    <th>Rejected Teams</th>
+    <th>Result</th>
     <th colspan="1"></th>
   </tr>
   </thead>
@@ -28,6 +30,8 @@
   <% @game.missions.each do |mission| %>
     <tr>
       <td><%= mission.mission_number+1 %></td>
+      <td><%= mission.rejection_count %></td>
+      <td><%= mission.result.nil? ? 'Not Complete' : (mission.result ? 'Pass' : 'Fail') %></td>
       <td><%= link_to 'Details', mission %></td>
     </tr>
   <% end %>

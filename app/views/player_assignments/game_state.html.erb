@@ -1,0 +1,14 @@
+<div class="current_king">
+  Current King: <%= @player_assignment.game.current_king.player.name %>
+</div>
+<div class="current_mission">
+  Mission #<%= @player_assignment.game.current_mission.mission_number + 1 %>
+</div>
+<div class="mission_status">
+  <% if @waiting_players.size > 0 %>
+   Waiting for [<%= @waiting_players.map(&:name).join(', ') %>] to <%= @mission_status_text %>
+  <% end %>
+</div>
+<div class="scoreboard">
+  <%= raw scoreboard_table @player_assignment.game %>
+</div>

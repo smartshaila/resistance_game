@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resources :missions
   resources :player_assignments do
     get 'revealed_info', on: :member
+    get 'game_state', on: :member
   end
   resources :roles
   resources :factions
@@ -21,7 +22,7 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'games#index'
+  root 'login#index'
 
   get '/teams/:team_id/team_votes/:player_assignment_id/new', to: 'team_votes#new', as: 'vote_on_team'
 

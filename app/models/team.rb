@@ -12,7 +12,7 @@ class Team < ActiveRecord::Base
   end
 
   def approved?
-    
+    self.team_votes.to_a.count(&:approve?) > self.mission.game.player_assignments.size * 0.5
   end
 
   def mission_voting_complete?

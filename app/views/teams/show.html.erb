@@ -10,7 +10,7 @@
   <tbody>
   <% @team.team_assignments.each do |a| %>
     <tr>
-      <td><%= a.player_assignment.player.name %></td>
+      <td><%= link_to a.player_assignment.player.name, edit_team_assignment_path(a.id) %></td>
     </tr>
   <% end %>
   </tbody>
