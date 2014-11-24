@@ -9,14 +9,12 @@ class LoginController < ApplicationController
       player_assignment = PlayerAssignment.find(pa)
       player = player_assignment.player
       if player.calculate_password_hash(params[:password]) == player.password_hash
-        # Reveal Assignment Page
-        # format.html { redirect_to @player, notice: 'Player was successfully updated.' }
-        logger.info "You win!"
+        redirect_to controller: :player_assignments, action: :game_state, id: pa
       else
-        logger.info "You suck."
+        redirect_to action: :index
       end
     else
-      logger.info "Pick a Player silly."
+      redirect_to action: :index
     end
   end
 end

@@ -1,3 +1,4 @@
+<p id="notice"><%= notice %></p>
 <%= form_tag({controller: 'login', action: 'login'}, {method: 'post'}) do %>
   <p><%= select(:game_id, '', @games.map(&:id), {prompt: 'Select a Game', selected: nil}, {id: 'game_id'}) %></p>
   <p><select id="player_assignment_" name="player_assignment_id">
