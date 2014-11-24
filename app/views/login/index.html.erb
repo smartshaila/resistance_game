@@ -6,6 +6,7 @@
   <p><%= password_field_tag(:password, nil, placeholder: 'Password') %></p>
   <p><%= submit_tag 'Login' %></p>
 <% end %>
+
 <div style="display:none">
   <% @games.each do |g| %>
     <%= select("player_assignment_id", '', g.player_assignments.map{|p| [p.player.name, p.id]}, {prompt: 'Select Player', selected: nil}, {id: "player_assignment_#{g.id}"}) %>

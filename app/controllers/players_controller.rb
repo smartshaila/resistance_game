@@ -3,6 +3,7 @@ class PlayersController < ApplicationController
 
   # GET /players
   # GET /players.json
+
   def index
     @players = Player.all
   end
@@ -26,6 +27,9 @@ class PlayersController < ApplicationController
   def create
     @player = Player.new(player_params)
 
+    @player.password_salt = generate_salt
+    @player.password_hash = @player.calculate_password_hash(params[:password])
+
     respond_to do |format|
       if @player.save
         format.html { redirect_to @player, notice: 'Player was successfully created.' }
@@ -40,6 +44,9 @@ class PlayersController < ApplicationController
   # PATCH/PUT /players/1
   # PATCH/PUT /players/1.json
   def update
+    @player.password_salt = generate_salt
+    @player.password_hash = @player.calculate_password_hash(params[:password])
+
     respond_to do |format|
       if @player.update(player_params)
         format.html { redirect_to @player, notice: 'Player was successfully updated.' }
@@ -70,5 +77,11 @@ class PlayersController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def player_params
       params.require(:player).permit(:name, :password)
+    end
+
+    def generate_salt
+      o = [('a'..'z'), ('A'..'Z'), ('0'..'9')].map(&:to_a).flatten
+      # return salt
+      (0...50).map{o[rand(o.length)]}.join
     end
 end
