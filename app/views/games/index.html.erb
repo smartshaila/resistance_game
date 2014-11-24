@@ -3,6 +3,7 @@
 <table>
   <thead>
     <tr>
+      <th>Game ID</th>
       <th>Public vote</th>
       <th>Public lancelot switch</th>
       <th colspan="3"></th>
@@ -12,6 +13,7 @@
   <tbody>
     <% @games.each do |game| %>
       <tr>
+        <td><%= game.id %></td>
         <td><%= game.public_vote %></td>
         <td><%= game.public_lancelot_switch %></td>
         <td><%= link_to 'Show', game %></td>

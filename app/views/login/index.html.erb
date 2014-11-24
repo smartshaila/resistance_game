@@ -1,0 +1,24 @@
+<%= form_tag({controller: 'login', action: 'login'}, {method: 'post'}) do %>
+  <p><%= select(:game_id, '', @games.map(&:id), {prompt: 'Select a Game', selected: nil}, {id: 'game_id'}) %></p>
+  <p><select id="player_assignment_" name="player_assignment_id">
+    <option value>Select Player</option>
+  </select></p>
+  <p><%= password_field_tag(:password, nil, placeholder: 'Password') %></p>
+  <p><%= submit_tag 'Login' %></p>
+<% end %>
+<div style="display:none">
+  <% @games.each do |g| %>
+    <%= select("player_assignment_id", '', g.player_assignments.map{|p| [p.player.name, p.id]}, {prompt: 'Select Player', selected: nil}, {id: "player_assignment_#{g.id}"}) %>
+  <% end %>
+  <select id="player_assignment_" name="player_assignment_id">
+    <option value>Select Player</option>
+  </select>
+</div>
+
+<script>
+  var current_game_id = '';
+  $('#game_id').change(function() {
+    $('#player_assignment_' + current_game_id).replaceWith($('#player_assignment_' + this.value));
+    current_game_id = this.value;
+  });
+</script>

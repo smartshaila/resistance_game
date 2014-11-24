@@ -1,31 +1,21 @@
 Rails.application.routes.draw do
   resources :role_relationships
-
   resources :mission_capacities
-
   resources :lancelots
-
   resources :ladies
-
   resources :team_assignments
-
   resources :team_votes
-
   resources :teams
-
   resources :missions
-
   resources :player_assignments do
     get 'revealed_info', on: :member
   end
-
   resources :roles
-
   resources :factions
-
   resources :players
-
   resources :games
+  get 'login', to: 'login#index'
+  post 'login', to: 'login#login'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
