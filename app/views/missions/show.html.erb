@@ -15,7 +15,7 @@
       <td><%= team.mission.mission_number+1 %></td>
       <td><%= team.id %></td>
       <td><%= link_to 'Details', team %></td>
-      <td><%= link_to 'Assign Team', team %></td>
+      <td><%= link_to 'Assign Team', edit_team_path(team) %></td>
       <td><%= link_to 'Vote on Team', team %></td>
     </tr>
   <% end %>
