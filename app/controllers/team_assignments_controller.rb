@@ -40,8 +40,14 @@ class TeamAssignmentsController < ApplicationController
   # PATCH/PUT /team_assignments/1
   # PATCH/PUT /team_assignments/1.json
   def update
+    team_assignment_updated = @team_assignment.update(team_assignment_params)
+
+    if @team_assignment.team.mission_voting_complete?
+      @team_assignment.team.mission.game.increment_mission
+    end
+
     respond_to do |format|
-      if @team_assignment.update(team_assignment_params)
+      if team_assignment_updated
         format.html { redirect_to @team_assignment, notice: 'Team assignment was successfully updated.' }
         format.json { render :show, status: :ok, location: @team_assignment }
       else

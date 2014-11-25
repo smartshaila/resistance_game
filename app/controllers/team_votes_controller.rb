@@ -26,7 +26,11 @@ class TeamVotesController < ApplicationController
   # POST /team_votes
   # POST /team_votes.json
   def create
-    @team_vote = TeamVote.new(team_vote_params)
+    @team_vote = TeamVote.create(team_vote_params)
+
+    if @team_vote.team.team_voting_complete? and not @team_vote.approve?
+      Team.create(mission: @team_vote.team.mission)
+    end
 
     respond_to do |format|
       if @team_vote.save

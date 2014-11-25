@@ -8,14 +8,13 @@ class Game < ActiveRecord::Base
 
   def game_setup (players, roles)
     set_assignments(players, roles)
-    m = Mission.create(game: self, mission_number: 0)
-    Team.create(mission: m)
+    increment_mission
   end
 
   def set_assignments (players, roles)
     roles.shuffle!
     players.rotate!(rand(players.size))
-    players.each_with_index { |player,index|
+    players.each_with_index {|player,index|
       p = PlayerAssignment.new
       p.player_id = player.to_i
       p.seat_number = index
@@ -23,6 +22,13 @@ class Game < ActiveRecord::Base
       p.game = self
       p.save
     }
+  end
+
+  def increment_mission
+    unless [self.missions.to_a.count {|m| m.result }, self.missions.to_a.count {|m| m.result == false }].any? {|r| r > mission_capacities.size * 0.5}
+      m = Mission.create(game: self, mission_number: self.missions.size)
+      Team.create(mission: m)
+    end
   end
 
   def current_king

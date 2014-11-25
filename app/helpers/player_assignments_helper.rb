@@ -11,5 +11,6 @@ module PlayerAssignmentsHelper
       html += "<tr><td>#{c.join('</td><td>')}</td></tr>"
     end
     html += "</tbody></table>"
+    raw html
   end
 end
