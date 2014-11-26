@@ -6,6 +6,7 @@
       <th>Game ID</th>
       <th>Public vote</th>
       <th>Public lancelot switch</th>
+      <th>Complete?</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -16,6 +17,7 @@
         <td><%= game.id %></td>
         <td><%= game.public_vote %></td>
         <td><%= game.public_lancelot_switch %></td>
+        <td><%= game.complete? %></td>
         <td><%= link_to 'Show', game %></td>
         <td><%= link_to 'Edit', edit_game_path(game) %></td>
         <td><%= link_to 'Destroy', game, method: :delete, data: { confirm: 'Are you sure?' } %></td>
