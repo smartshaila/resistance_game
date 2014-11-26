@@ -28,7 +28,7 @@ class TeamVotesController < ApplicationController
   def create
     @team_vote = TeamVote.create(team_vote_params)
 
-    if @team_vote.team.team_voting_complete? and not @team_vote.approve?
+    if @team_vote.team.team_voting_complete? and not @team_vote.approve? and @team_vote.mission.teams.size < @team_vote.game.mission_capacities.size
       Team.create(mission: @team_vote.team.mission)
     end
 
