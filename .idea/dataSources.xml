@@ -4,7 +4,7 @@
     <data-source source="LOCAL" name="Rails resistance_game: development" uuid="f51ede42-3780-4bb7-9c7c-248a6b792c3e">
       <driver-ref>sqlite.xerial</driver-ref>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:R:\resistance_game\db\development.sqlite3</jdbc-url>
+      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/db/development.sqlite3</jdbc-url>
       <libraries />
     </data-source>
   </component>
