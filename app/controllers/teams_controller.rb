@@ -19,6 +19,7 @@ class TeamsController < ApplicationController
 
   # GET /teams/1/edit
   def edit
+
   end
 
   # POST /teams
@@ -40,15 +41,22 @@ class TeamsController < ApplicationController
   # PATCH/PUT /teams/1
   # PATCH/PUT /teams/1.json
   def update
-    @team.team_assignments.destroy_all
-    assigned_players = params[:team][:team_assignments]
+    updated = false
 
-    assigned_players.each do |pa|
-      TeamAssignment.create(team: @team, player_assignment_id: pa.to_i)
+    unless @team.team_voting_complete?
+      @team.team_assignments.destroy_all
+      @team.team_votes.destroy_all
+      assigned_players = params[:team][:team_assignments]
+
+      assigned_players.each do |pa|
+        TeamAssignment.create(team: @team, player_assignment_id: pa.to_i)
+      end
+
+      updated = @team.update(team_params)
     end
 
     respond_to do |format|
-      if @team.update(team_params)
+      if updated
         format.html { redirect_to @team, notice: 'Team was successfully updated.' }
         format.json { render :show, status: :ok, location: @team }
       else

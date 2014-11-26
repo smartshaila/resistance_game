@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141115005925) do
+ActiveRecord::Schema.define(version: 20141126123417) do
 
   create_table "factions", force: true do |t|
     t.string   "name"
@@ -99,6 +99,7 @@ ActiveRecord::Schema.define(version: 20141115005925) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "description"
+    t.integer  "valid_vote"
   end
 
   add_index "roles", ["faction_id"], name: "index_roles_on_faction_id"
