@@ -42,7 +42,15 @@ class Game < ActiveRecord::Base
     self.missions.max_by(&:mission_number)
   end
 
+  def current_team
+    current_mission.current_team
+  end
+
   def mission_capacities
     MissionCapacity.where player_count: self.player_assignments.size
+  end
+
+  def complete?
+    current_team.team_voting_complete? and (!current_team.approved? or current_team.mission_voting_complete?)
   end
 end
