@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ResistanceGame</title>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body>
+    <ul id='navigation'>
+      <li><%= link_to 'Game State', game_state_player_assignment_path(@player_assignment) %></li>
+      <li><%= link_to 'Revealed Info', revealed_info_player_assignment_path(@player_assignment) %></li>
+      <li><%= link_to 'Current Action', current_action_player_assignment_path(@player_assignment) %></li>
+      <li><%= link_to 'Game Log', game_log_player_assignment_path(@player_assignment) %></li>
+    </ul>
+    <%= yield %>
+  </body>
+</html>

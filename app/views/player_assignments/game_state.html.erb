@@ -1,6 +1,4 @@
 <p id="notice"><%= notice %></p>
-<div class="user">
-  <%= link_to "Revealed Info for #{@player_assignment.player.name}", revealed_info_player_assignment_path(@player_assignment) %>
 <div class="current_king">
   Current King: <%= @player_assignment.game.current_king.player.name %>
 </div>

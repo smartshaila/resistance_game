@@ -10,6 +10,11 @@ Rails.application.routes.draw do
   resources :player_assignments do
     get 'revealed_info', on: :member
     get 'game_state', on: :member
+    get 'current_action', on: :member
+    post 'team_vote', on: :member
+    post 'assign_team', on: :member
+    post 'mission_vote', on: :member
+    get 'game_log', on: :member
   end
   resources :roles
   resources :factions

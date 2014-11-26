@@ -1,5 +1,6 @@
 class PlayerAssignmentsController < ApplicationController
-  before_action :set_player_assignment, only: [:show, :edit, :update, :destroy, :revealed_info, :game_state]
+  before_action :set_player_assignment, only: [:show, :edit, :update, :destroy, :revealed_info, :game_state, :current_action, :game_log]
+  layout 'logged_in'
 
   # GET /player_assignments
   # GET /player_assignments.json
@@ -93,6 +94,12 @@ class PlayerAssignmentsController < ApplicationController
   def game_state
     @waiting_players = []
     @mission_status_text = ''
+  end
+
+  def current_action
+  end
+
+  def game_log
   end
 
   private
