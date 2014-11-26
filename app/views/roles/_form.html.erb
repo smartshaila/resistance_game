@@ -19,7 +19,24 @@
     <%= f.label :faction %><br>
     <%= f.collection_select(:faction_id, Faction.all, :id, :name, prompt: true) %>
   </div>
+  <div class="field">
+    <input id="role_can_fail" type="checkbox" <%= 'checked="checked"' if @role.valid_vote & 1 == 1 %> />
+    <%= f.label :can_fail? %>
+  </div>
+  <div class="field">
+    <input id="role_can_pass" type="checkbox" <%= 'checked="checked"' if @role.valid_vote & 2 == 2 %> />
+    <%= f.label :can_pass? %>
+  </div>
   <div class="actions">
+    <%= f.hidden_field :valid_vote %>
+    <script>
+      function update_valid_votes() {
+        $('#role_valid_vote').val($('#role_can_fail').is(':checked') * 1 + $('#role_can_pass').is(':checked') * 2)
+      }
+
+      $('#role_can_fail').change(update_valid_votes);
+      $('#role_can_pass').change(update_valid_votes);
+    </script>
     <%= f.submit %>
   </div>
 <% end %>
