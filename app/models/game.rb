@@ -53,4 +53,8 @@ class Game < ActiveRecord::Base
   def complete?
     current_team.team_voting_complete? and (!current_team.approved? or current_team.mission_voting_complete?)
   end
+
+  def status
+
+  end
 end

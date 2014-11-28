@@ -10,5 +10,10 @@
   <%= @role.faction.name %>
 </p>
 
+<p>
+  <strong>This is what I look like:</strong>
+  <%=image_tag("#{@role.name.downcase}.png") %>
+</p>
+
 <%= link_to 'Edit', edit_role_path(@role) %> |
 <%= link_to 'Back', roles_path %>
