@@ -55,8 +55,8 @@ class TeamsController < ApplicationController
 
     respond_to do |format|
       if updated
-        if params.include? :player_assignment
-          format.html { redirect_to({controller: :player_assignments, action: :current_action, id: params[:player_assignment]}, notice: 'Team was successfully updated.') }
+        if params.include? :player_assignment_redirect
+          format.html { redirect_to({controller: :player_assignments, action: :current_action, id: params[:player_assignment_redirect]}, notice: 'Team was successfully updated.') }
         end
         format.html { redirect_to @team, notice: 'Team was successfully updated.' }
         format.json { render :show, status: :ok, location: @team }

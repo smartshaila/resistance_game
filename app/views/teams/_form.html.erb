@@ -21,7 +21,7 @@
       <br />
     <% end %>
   </p>
-  <%= hidden_field_tag 'player_assignment', @player_assignment.id if @player_assignment %>
+  <%= hidden_field_tag :player_assignment_redirect, @player_assignment.id if @player_assignment %>
   <%= f.hidden_field :id %>
   <div class="actions">
     <%= f.submit %>

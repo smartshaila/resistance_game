@@ -10,28 +10,30 @@
       </ul>
     </div>
   <% end %>
-
-  <table>
-    <thead>
-      <tr>
-        <th>Team Members</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @team_vote.team.team_assignments.each do |a| %>
+  <% if @team_vote.player_assignment != @team_vote.team.mission.game.current_king %>
+    <table>
+      <thead>
         <tr>
-          <td><%= a.player_assignment.player.name %></td>
+          <th>Team Members</th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
-  <p><strong><%= @team_vote.player_assignment.player.name %>'s Vote:</strong></p>
+      </thead>
+      <tbody>
+        <% @team_vote.team.team_assignments.each do |a| %>
+          <tr>
+            <td><%= a.player_assignment.player.name %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+  <p><strong>Your Vote:</strong></p>
   <div class="field">
     <%= f.label :approve %><br>
     <%= f.check_box :approve %>
     <%= f.hidden_field :team_id %>
     <%= f.hidden_field :player_assignment_id %>
   </div>
+  <%= hidden_field_tag :player_assignment_redirect, @player_assignment.id if @player_assignment %>
   <div class="actions">
     <%= f.submit %>
   </div>
