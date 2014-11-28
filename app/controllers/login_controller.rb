@@ -1,6 +1,6 @@
 class LoginController < ApplicationController
   def index
-    @games = Game.all
+    @games = Game.all.find_all {|g| !g.complete?}
   end
 
   def login
