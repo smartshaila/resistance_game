@@ -12,11 +12,9 @@
   <% end %>
 
   <div class="field">
-    <input type="radio" id="team_assignment_pass_null" name="team_assignment[pass]" value="" <%= "checked" if @team_assignment.pass.nil? %> />
-    <%= f.label :pass_null, 'No Vote' %>
-    <input type="radio" id="team_assignment_pass_false" name="team_assignment[pass]" value="false" <%= "checked" if @team_assignment.pass == false %> />
+    <input type="radio" id="team_assignment_pass_false" name="team_assignment[pass]" value="false" <%= "checked" if @team_assignment.pass == false %> <%= "disabled" if @team_assignment.player_assignment.role.valid_vote & 1 == 0 %> />
     <%= f.label :pass_false, 'Fail' %>
-    <input type="radio" id="team_assignment_pass_true" name="team_assignment[pass]" value="true" <%= "checked" if @team_assignment.pass? %> />
+    <input type="radio" id="team_assignment_pass_true" name="team_assignment[pass]" value="true" <%= "checked" if @team_assignment.pass? %> <%= "disabled" if @team_assignment.player_assignment.role.valid_vote & 2 == 0 %> />
     <%= f.label :pass_true, 'Pass' %>
   </div>
   <%= f.hidden_field :team_id %>

@@ -41,27 +41,26 @@ class TeamsController < ApplicationController
   # PATCH/PUT /teams/1
   # PATCH/PUT /teams/1.json
   def update
-    updated = false
-
-    unless @team.team_voting_complete?
+    notice = 'Team has not been changed yet'
+    assigned_players = (params[:team][:team_assignments] or [])
+    if @team.team_voting_complete?
+      notice = 'Team voting is already complete'
+    elsif assigned_players.size > @team.mission.capacity.capacity
+      notice = 'You have selected too many people for this team'
+    else
       @team.team_assignments.destroy_all
       @team.team_votes.destroy_all
-      assigned_players = (params[:team][:team_assignments] or [])
       assigned_players.each do |pa|
         TeamAssignment.create(team: @team, player_assignment_id: pa.to_i)
       end
-      updated = @team.update(team_params)
+      notice = 'Team was successfully updated' if @team.update(team_params)
     end
 
     respond_to do |format|
-      if updated
-        if params.include? :player_assignment_redirect
-          format.html { redirect_to({controller: :player_assignments, action: :current_action, id: params[:player_assignment_redirect]}, notice: 'Team was successfully updated.') }
-        end
-        format.html { redirect_to @team, notice: 'Team was successfully updated.' }
-        format.json { render :show, status: :ok, location: @team }
+      if params.include? :player_assignment_redirect
+          format.html { redirect_to({controller: :player_assignments, action: :current_action, id: params[:player_assignment_redirect]}, notice: notice) }
       else
-        format.html { render :edit }
+        format.html { render :edit, notice: notice }
         format.json { render json: @team.errors, status: :unprocessable_entity }
       end
     end
