@@ -107,6 +107,10 @@ class PlayerAssignmentsController < ApplicationController
     @renders[:team_assignments] = (is_king and not voting_complete)
     @renders[:team_votes] = (team_assigned and not voting_complete)
     @renders[:mission_votes] = (team_assigned and voting_complete and is_questing and not mission_complete)
+
+    if @renders[:team_assignments]
+      @team = @player_assignment.game.current_team
+    end
    end
 
   def game_log

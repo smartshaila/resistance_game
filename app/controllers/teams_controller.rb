@@ -46,17 +46,18 @@ class TeamsController < ApplicationController
     unless @team.team_voting_complete?
       @team.team_assignments.destroy_all
       @team.team_votes.destroy_all
-      assigned_players = params[:team][:team_assignments]
-
+      assigned_players = (params[:team][:team_assignments] or [])
       assigned_players.each do |pa|
         TeamAssignment.create(team: @team, player_assignment_id: pa.to_i)
       end
-
       updated = @team.update(team_params)
     end
 
     respond_to do |format|
-      if updated 
+      if updated
+        if params.include? :player_assignment
+          format.html { redirect_to({controller: :player_assignments, action: :current_action, id: params[:player_assignment]}, notice: 'Team was successfully updated.') }
+        end
         format.html { redirect_to @team, notice: 'Team was successfully updated.' }
         format.json { render :show, status: :ok, location: @team }
       else

@@ -1,8 +1,10 @@
+<p id="notice"><%= notice %></p>
+
 <div id="game_status">
   <%= @player_assignment.game.status %>
 </div>
 <div id="team_assign">
-  <%= render 'team_assign' if @renders[:team_assignments] %>
+  <%= render 'teams/form' if @renders[:team_assignments] %>
 </div>
 <div id="team_vote">
   <%= render 'team_vote'  if @renders[:team_votes] %>
