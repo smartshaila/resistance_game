@@ -13,6 +13,8 @@
       <li><%= link_to 'Current Action', current_action_player_assignment_path(@player_assignment) %></li>
       <li><%= link_to 'Game Log', game_log_player_assignment_path(@player_assignment) %></li>
     </ul>
-    <%= yield %>
+    <div class="content">
+      <%= yield %>
+    </div>
   </body>
 </html>
