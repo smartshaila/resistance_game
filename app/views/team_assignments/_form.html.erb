@@ -19,14 +19,9 @@
     <input type="radio" id="team_assignment_pass_true" name="team_assignment[pass]" value="true" <%= "checked" if @team_assignment.pass? %> />
     <%= f.label :pass_true, 'Pass' %>
   </div>
-  <div class="field">
-    <%= f.label :team_id %><br>
-    <%= f.text_field :team_id %>
-  </div>
-  <div class="field">
-    <%= f.label :player_assignment_id %><br>
-    <%= f.text_field :player_assignment_id %>
-  </div>
+  <%= f.hidden_field :team_id %>
+  <%= f.hidden_field :player_assignment_id %>
+  <%= hidden_field_tag :player_assignment_redirect, @player_assignment.id if @player_assignment %>
   <div class="actions">
     <%= f.submit %>
   </div>

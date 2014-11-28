@@ -112,11 +112,18 @@ class PlayerAssignmentsController < ApplicationController
       @team = @player_assignment.game.current_team
     end
 
-    # In Ruby, a || b defers to b if a is nil
+    current_team_current_player = {team: @player_assignment.game.current_team, player_assignment: @player_assignment}
 
     if @renders[:team_votes]
-      @team_vote = (TeamVote.where(team: @player_assignment.game.current_team, player_assignment: @player_assignment).first or TeamVote.new(team: @player_assignment.game.current_team, player_assignment: @player_assignment))
+      # In Ruby, a || b defers to b if a is nil
+      @team_vote = (TeamVote.where(current_team_current_player).first or TeamVote.new(current_team_current_player))
     end
+
+    if @renders[:mission_votes]
+      @team_assignment = (TeamAssignment.where(current_team_current_player).first or TeamAssignment.new(current_team_current_player))
+      logger.info @team_assignment
+    end
+
    end
 
   def game_log

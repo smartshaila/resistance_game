@@ -34,6 +34,9 @@ class TeamVotesController < ApplicationController
 
     respond_to do |format|
       if @team_vote.save
+        if params.include? :player_assignment_redirect
+          format.html { redirect_to({controller: :player_assignments, action: :game_state, id: params[:player_assignment_redirect]}, notice: 'Team vote was successfully updated.') }
+        end
         format.html { redirect_to @team_vote, notice: 'Team vote was successfully created.' }
         format.json { render :show, status: :created, location: @team_vote }
       else

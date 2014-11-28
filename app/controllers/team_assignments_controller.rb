@@ -48,6 +48,9 @@ class TeamAssignmentsController < ApplicationController
 
     respond_to do |format|
       if team_assignment_updated
+        if params.include? :player_assignment_redirect
+          format.html { redirect_to({controller: :player_assignments, action: :game_state, id: params[:player_assignment_redirect]}, notice: 'Mission vote was successfully updated.') }
+        end
         format.html { redirect_to @team_assignment, notice: 'Team assignment was successfully updated.' }
         format.json { render :show, status: :ok, location: @team_assignment }
       else

@@ -28,11 +28,15 @@
   <% end %>
   <p><strong>Your Vote:</strong></p>
   <div class="field">
-    <%= f.label :approve %><br>
-    <%= f.check_box :approve %>
-    <%= f.hidden_field :team_id %>
-    <%= f.hidden_field :player_assignment_id %>
+    <input type="radio" id="team_vote_approve_null" name="team_vote[approve]" value="" <%= "checked" if @team_vote.approve.nil? %> />
+    <%= f.label :approve_null, 'No Vote' %>
+    <input type="radio" id="team_vote_approve_false" name="team_vote[approve]" value="false" <%= "checked" if @team_vote.approve == false %> />
+    <%= f.label :approve_false, 'Reject' %>
+    <input type="radio" id="team_vote_approve_true" name="team_vote[approve]" value="true" <%= "checked" if @team_vote.approve? %> />
+    <%= f.label :approve_true, 'Approve' %>
   </div>
+  <%= f.hidden_field :team_id %>
+  <%= f.hidden_field :player_assignment_id %>
   <%= hidden_field_tag :player_assignment_redirect, @player_assignment.id if @player_assignment %>
   <div class="actions">
     <%= f.submit %>
