@@ -58,7 +58,9 @@ class Game < ActiveRecord::Base
     if !current_team.assignments_complete?
       "Waiting for #{current_king.player.name.capitalize} to pick a team of #{current_mission.capacity.capacity} players..."
     elsif !current_team.team_voting_complete?
-      "Waiting for #{current_team.team_votes.where(approve: nil).map{|vote| vote.player_assignment.player.name}.to_sentence} to vote on the team..."
+      pending_player_assignments = self.player_assignments - current_team.team_votes.where.not(approve: nil).map{|vote| vote.player_assignment}
+      output = pending_player_assignments.map{|assignment| assignment.player.name}.to_sentence
+      "Waiting for #{output} to vote on the team..."
     elsif !current_team.mission_voting_complete?
       "Waiting for #{current_team.team_assignments.where(pass: nil).map{|assignment| assignment.player_assignment.player.name}.to_sentence} to vote on the mission..."
     else
