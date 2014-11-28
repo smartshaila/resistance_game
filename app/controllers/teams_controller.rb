@@ -56,9 +56,13 @@ class TeamsController < ApplicationController
     end
 
     respond_to do |format|
-      if updated
-        format.html { redirect_to @team, notice: 'Team was successfully updated.' }
-        format.json { render :show, status: :ok, location: @team }
+      if updated 
+        if params[:player_assignment_id]
+          format.html { redirect_to controller: :player_assignments, action: :game_state, id: params[:player_assignment_id] }
+        else
+          format.html { redirect_to @team, notice: 'Team was successfully updated.' }
+          format.json { render :show, status: :ok, location: @team }
+        end
       else
         format.html { render :edit }
         format.json { render json: @team.errors, status: :unprocessable_entity }

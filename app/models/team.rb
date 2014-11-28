@@ -4,7 +4,7 @@ class Team < ActiveRecord::Base
   has_many :team_assignments, dependent: :destroy
 
   def assignments_complete?
-    self.team_assignments.size == MissionCapacity.find_by(player_count: self.mission.game.player_assignments.size, mission_number: self.mission.mission_number)
+    self.team_assignments.size == MissionCapacity.find_by(player_count: self.mission.game.player_assignments.size, mission_number: self.mission.mission_number).capacity
   end
 
   def team_voting_complete?
