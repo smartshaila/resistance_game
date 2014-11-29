@@ -1,36 +1,43 @@
-<%= form_for(@team_assignment) do |f| %>
-  <% if @team_assignment.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@team_assignment.errors.count, "error") %> prohibited this team_assignment from being saved:</h2>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Vote on current mission</h3>
+  </div>
+  <div class="panel-body">
+    <%= form_for(@team_assignment) do |f| %>
+      <% if @team_assignment.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@team_assignment.errors.count, "error") %> prohibited this team_assignment from being saved:</h2>
 
-      <ul>
-      <% @team_assignment.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+          <ul>
+          <% @team_assignment.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
       <% end %>
-      </ul>
-    </div>
-  <% end %>
 
-  <% 
-    fail_disabled = @team_assignment.player_assignment.role.valid_vote & 1 == 0
-    pass_disabled = @team_assignment.player_assignment.role.valid_vote & 2 == 0
-    failed = @team_assignment.pass == false
-    passed = @team_assignment.pass?
-  %>
-  <div class="btn-group form-group" data-toggle="buttons" data-bind="checkbox: checkboxArray">
-    <label class="btn btn-primary<%= ' active' if failed %><%= ' disabled' if fail_disabled %>">
-      <input type="radio" id="team_assignment_pass_false" name="team_assignment[pass]" value="false" <%= "checked" if failed %> <%= "disabled" if fail_disabled %> />
-      Fail
-    </label>
-    <label class="btn btn-primary<%= ' active' if passed %><%= ' disabled' if pass_disabled %>">
-      <input type="radio" id="team_assignment_pass_true" name="team_assignment[pass]" value="true" <%= "checked" if passed %> <%= "disabled" if pass_disabled %> />
-      Pass
-    </label>
+      <%
+        fail_disabled = @team_assignment.player_assignment.role.valid_vote & 1 == 0
+        pass_disabled = @team_assignment.player_assignment.role.valid_vote & 2 == 0
+        failed = @team_assignment.pass == false
+        passed = @team_assignment.pass?
+      %>
+      <div class="btn-group form-group" data-toggle="buttons" data-bind="checkbox: checkboxArray">
+        <label class="btn btn-primary<%= ' active' if failed %><%= ' disabled' if fail_disabled %>">
+          <input type="radio" id="team_assignment_pass_false" name="team_assignment[pass]" value="false" <%= "checked" if failed %> <%= "disabled" if fail_disabled %> />
+          Fail
+        </label>
+        <label class="btn btn-primary<%= ' active' if passed %><%= ' disabled' if pass_disabled %>">
+          <input type="radio" id="team_assignment_pass_true" name="team_assignment[pass]" value="true" <%= "checked" if passed %> <%= "disabled" if pass_disabled %> />
+          Pass
+        </label>
+      </div>
+      <%= f.hidden_field :team_id %>
+      <%= f.hidden_field :player_assignment_id %>
+      <%= hidden_field_tag :player_assignment_redirect, @player_assignment.id if @player_assignment %>
+      <div class="actions">
+        <%= f.submit nil, {class: "btn btn-default btn-lg"} %>
+      </div>
+    <% end %>
   </div>
-  <%= f.hidden_field :team_id %>
-  <%= f.hidden_field :player_assignment_id %>
-  <%= hidden_field_tag :player_assignment_redirect, @player_assignment.id if @player_assignment %>
-  <div class="actions">
-    <%= f.submit nil, {class: "btn btn-default btn-lg"} %>
-  </div>
-<% end %>
+</div>
