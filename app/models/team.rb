@@ -16,6 +16,6 @@ class Team < ActiveRecord::Base
   end
 
   def mission_voting_complete?
-    self.team_assignments.all? {|ta| !ta.pass.nil? }
+    assignments_complete? and self.team_assignments.all? {|ta| !ta.pass.nil? }
   end
 end

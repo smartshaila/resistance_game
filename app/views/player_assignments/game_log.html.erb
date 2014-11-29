@@ -1,1 +1,18 @@
-Game log is not yet implemented
+<% @player_assignment.game.missions.reverse.each do |mission| %>
+  <% mission.teams.reverse.each do |team| %>
+    <h3>Mission #<%= mission.mission_number + 1 %> - <%= mission.capacity.capacity %> Players</h3>
+    <% if team.assignments_complete? %>
+      Team of <%= team.team_assignments.map{|ta| ta.player_assignment.player.name }.to_sentence %> was proposed.<br />
+    <% end %>
+    <% if team.team_voting_complete? %>
+      <% if @player_assignment.game.public_vote? %>
+        Team Voting results: <%= team.team_votes.map{|tv| "#{tv.player_assignment.player.name} #{tv.approve? ? 'approved' : 'rejected'} the team"}.to_sentence %><br />
+      <% else %>
+        Team Voting results: Approved: <%= team.team_votes.to_a.count(&:approve?) %>, Rejected: <%= team.team_votes.size - team.team_votes.to_a.count(&:approve?) %><br />
+      <% end %>
+    <% end %>
+    <% if team.mission_voting_complete? %>
+      <%= team.mission.voting_results.map{|k,v| "#{v} votes to #{k ? 'Pass' : 'Fail'}"}.to_sentence %><br />
+    <% end %>
+  <% end %>
+<% end %>
