@@ -12,7 +12,6 @@
  *
  *= require_tree .
  *= require_self
- *= require jquery.mobile
  */
 
 @import "bootstrap-sprockets"
@@ -21,35 +20,20 @@
 body
   font-family: Helvetica, Arial, Sans-Serif
 
-.content
-  width: 100%
-
-.good
+.revealed_good
   background-color: #C0E6FF
 
-
-.evil
+.revealed_evil
   background-color: #FFC0C0
 
+.revealed_unknown
+  background-color: palegreen
 
-#navigation ul
-  list-style-type: none
-  padding: 0 0 20px 0
-
-#navigation ul li
+#navigation
   float: left
-  margin: 2px 5px 0 5px
-  padding: 5px
-  background-color: #EEEEEE
-
-#navigation a
-  float: left
-  display: block
-  text-decoration: none
 
 #content
-  clear: left
-  margin: 20px
+  clear: right
 
 table, th, td
   border: 1px solid #999999

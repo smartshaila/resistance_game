@@ -7,14 +7,14 @@
     <%= csrf_meta_tags %>
   </head>
   <body>
-    <div id='navigation'>
-      <ul>
-        <li><%= link_to 'Game State', game_state_player_assignment_path(@player_assignment) %></li>
-        <li><%= link_to 'Revealed Info', revealed_info_player_assignment_path(@player_assignment) %></li>
-        <li><%= link_to 'Current Action', current_action_player_assignment_path(@player_assignment) %></li>
-        <li><%= link_to 'Game Log', game_log_player_assignment_path(@player_assignment) %></li>
-      </ul>
+  <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
+    <div id='navigation' class='list-group'>
+        <%= link_to 'Game State', game_state_player_assignment_path(@player_assignment), {class: 'list-group-item'} %>
+        <%= link_to 'Revealed Info', revealed_info_player_assignment_path(@player_assignment), {class: 'list-group-item'} %>
+        <%= link_to 'Current Action', current_action_player_assignment_path(@player_assignment), {class: 'list-group-item'} %>
+        <%= link_to 'Game Log', game_log_player_assignment_path(@player_assignment), {class: 'list-group-item'} %>
     </div>
+   </div>
     <div id='content'>
       <%= yield %>
     </div>
