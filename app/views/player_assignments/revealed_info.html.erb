@@ -2,13 +2,12 @@
 Role: <%= @player_assignment.role.name %></p>
 
 <p>
-  <strong>This is what I look like:</strong>
   <%=image_tag("#{@player_assignment.role.name.downcase}.png") %>
 </p>
 
 <table>
   <tr>
-    <td><strong>Player</strong></td>
+    <td><strong>Revealed</strong></td>
   </tr>
   <% @visible_relationships.each do |info| %>
     <tr>
