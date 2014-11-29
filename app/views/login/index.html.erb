@@ -1,7 +1,7 @@
 <p id="notice"><%= notice %></p>
 <%= form_tag({controller: 'login', action: 'login'}, {method: 'post'}) do %>
-  <p><%= select(:game_id, '', @games.map(&:id), {prompt: 'Select a Game', selected: nil}, {id: 'game_id'}) %></p>
-  <p><select id="player_assignment_" name="player_assignment_id">
+  <p><%= select(:game_id, '', @games.map(&:id), {prompt: 'Select a Game', selected: nil}, {id: 'game_id', class: 'form-control'}) %></p>
+  <p><select id="player_assignment" name="player_assignment_id" class="form-control">
     <option value>Select Player</option>
   </select></p>
   <p><%= password_field_tag(:password, nil, placeholder: 'Password', class: 'form-control') %></p>
@@ -20,9 +20,16 @@
   <%= link_to 'New Game', new_game_path %>
 </div>
 <script>
-  var current_game_id = '';
-  $('#game_id').change(function() {
-    $('#player_assignment_' + current_game_id).replaceWith($('#player_assignment_' + this.value));
-    current_game_id = this.value;
-  });
+  var player_assignments = <%= raw @player_assignment_json %>;
+  function update_players() {
+    var pa = player_assignments[$('#game_id')[0].value];
+    $('#player_assignment>option').remove();
+    $('#player_assignment').append($('<option>').text('Select Player'));
+    if (pa != null) {
+      pa.forEach(function(p) {
+        $('#player_assignment').append($('<option>').attr('value', p.id).text(p.name));
+      });
+    }
+  }
+  $('#game_id').change(update_players);
 </script>
