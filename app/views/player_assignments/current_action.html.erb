@@ -1,7 +1,7 @@
 <p id="notice"><%= notice %></p>
 
-<div id="game_status">
-  <%= @player_assignment.game.status %>
+<div id="game_status" class="alert alert-info">
+  <strong>Status:</strong> <%= @player_assignment.game.status %>
 </div>
 <div id="team_assign">
   <%= render 'teams/form' if @renders[:team_assignments] %>

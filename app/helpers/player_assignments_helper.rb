@@ -6,7 +6,7 @@ module PlayerAssignmentsHelper
     }).transpose
     header = capacities.first
     capacities = capacities[1..-1]
-    html = "<table style='border:1px'><thead><tr><th>#{header.join('</th><th>')}</th></tr></thead><tbody>"
+    html = "<table class='table table-striped'><thead><tr><th>#{header.join('</th><th>')}</th></tr></thead><tbody>"
     capacities.each do |c|
       html += "<tr><td>#{c.join('</td><td>')}</td></tr>"
     end
