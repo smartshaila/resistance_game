@@ -36,7 +36,7 @@
       <%= f.hidden_field :player_assignment_id %>
       <%= hidden_field_tag :player_assignment_redirect, @player_assignment.id if @player_assignment %>
       <div class="actions">
-        <%= f.submit nil, {class: "btn btn-default btn-lg"} %>
+        <%= f.submit 'Vote', {class: "btn btn-default btn-lg"} %>
       </div>
     <% end %>
   </div>
