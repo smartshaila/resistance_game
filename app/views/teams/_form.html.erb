@@ -16,15 +16,15 @@
         </div>
       <% end %>
       <p><strong>Select <%= @team.mission.capacity.capacity %> Players for this Team:</strong></p>
-        <div class="btn-group form-group" data-toggle="buttons" data-bind="checkbox: checkboxArray">
-          <% @team.mission.game.player_assignments.each do |pa| %>
-            <% selected = @team.team_assignments.map(&:player_assignment).include?(pa) %>
-            <label class="btn btn-primary <%= 'active' if selected %>">
-              <input type="checkbox" value="<%= pa.id %>" name="team[team_assignments][]" <%= "checked" if selected %> />
-              <%= pa.player.name %>
-            </label>
-          <% end %>
-        </div>
+      <div class="form-group" data-toggle="buttons" data-bind="checkbox: checkboxArray">
+        <% @team.mission.game.player_assignments.each do |pa| %>
+          <% selected = @team.team_assignments.map(&:player_assignment).include?(pa) %>
+          <label class="btn btn-primary btn-block <%= 'active' if selected %>">
+            <input type="checkbox" value="<%= pa.id %>" name="team[team_assignments][]" <%= "checked" if selected %> />
+            <%= pa.player.name %>
+          </label>
+        <% end %>
+      </div>
       <%= hidden_field_tag :player_assignment_redirect, @player_assignment.id if @player_assignment %>
       <%= f.hidden_field :id %>
       <div class="actions">
