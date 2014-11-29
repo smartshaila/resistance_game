@@ -32,16 +32,16 @@
         </table>
       <% end %>
       <p><strong>Your Vote:</strong></p>
-      <div class="btn-group form-group" data-toggle="buttons" data-bind="checkbox: checkboxArray">
-        <label class="btn btn-primary <%= "active" if @team_vote.approve.nil? %>">
+      <div class="form-group" data-toggle="buttons" data-bind="checkbox: checkboxArray">
+        <label class="btn btn-primary btn-block <%= "active" if @team_vote.approve.nil? %>">
           <input type="radio" id="team_vote_approve_null" name="team_vote[approve]" value="" <%= "checked" if @team_vote.approve.nil? %> />
           No Vote
         </label>
-        <label class="btn btn-primary <%= "active" if @team_vote.approve == false %>">
+        <label class="btn btn-primary btn-block <%= "active" if @team_vote.approve == false %>">
           <input type="radio" id="team_vote_approve_false" name="team_vote[approve]" value="false" <%= "checked" if @team_vote.approve == false %> />
           Reject
         </label>
-        <label class="btn btn-primary <%= "active" if @team_vote.approve? %>">
+        <label class="btn btn-primary btn-block <%= "active" if @team_vote.approve? %>">
           <input type="radio" id="team_vote_approve_true" name="team_vote[approve]" value="true" <%= "checked" if @team_vote.approve? %> />
           Approve
         </label>
