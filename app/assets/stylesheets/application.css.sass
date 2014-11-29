@@ -40,7 +40,7 @@ img
 #content
   padding: 10px
   clear: right
-  width: 65%
+  width: 90%
 
 table, th, td
   border: 1px solid #999999
@@ -60,6 +60,23 @@ th, td
 .row-offcanvas-left
   left: 0
 
+.row-offcanvas-right .sidebar-offcanvas
+  right: -10%
+
+.row-offcanvas-left .sidebar-offcanvas
+  left: -10%
+
+.row-offcanvas-right.active
+  right: 10%
+
+.row-offcanvas-left.active
+  left: 10%
+
+.sidebar-offcanvas
+  position: absolute
+  top: 0
+  width: 10%
+
 @media only screen and (min-device-width : 320px) and (max-device-width : 480px)
 
   .row-offcanvas-right .sidebar-offcanvas
@@ -75,6 +92,7 @@ th, td
     left: 35%
 
   .sidebar-offcanvas
-    position: absolute
-    top: 0
     width: 35%
+
+  #content
+    width: 65%
