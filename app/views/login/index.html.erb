@@ -18,11 +18,14 @@
 </div>
 <div>
   <%= link_to 'New Game', new_game_path %>
-
+</div>
+<span id='test1'>Swipe!</span>
 <script>
   var current_game_id = '';
   $('#game_id').change(function() {
     $('#player_assignment_' + current_game_id).replaceWith($('#player_assignment_' + this.value));
     current_game_id = this.value;
   });
+  $('body').on('swipeleft', function(){$('#test1').text('Left!')});
+  $('body').on('swiperight', function(){$('#test1').text('Right!')});
 </script>

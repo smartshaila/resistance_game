@@ -12,7 +12,7 @@ Role: <%= @player_assignment.role.name %></p>
   </tr>
   <% @visible_relationships.each do |info| %>
     <tr>
-      <td class="<%= info[:faction].name.downcase unless info[:faction].nil? %>"><%= info[:player].name %></td>
+      <td class="revealed_<%= info[:faction].nil? ? 'unknown' : info[:faction].name.downcase %>"><%= info[:player].name %></td>
     </tr>
   <% end %>
 </table>
