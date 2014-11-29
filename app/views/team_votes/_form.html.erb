@@ -27,18 +27,24 @@
     </table>
   <% end %>
   <p><strong>Your Vote:</strong></p>
-  <div class="field">
-    <input type="radio" id="team_vote_approve_null" name="team_vote[approve]" value="" <%= "checked" if @team_vote.approve.nil? %> />
-    <%= f.label :approve_null, 'No Vote' %>
-    <input type="radio" id="team_vote_approve_false" name="team_vote[approve]" value="false" <%= "checked" if @team_vote.approve == false %> />
-    <%= f.label :approve_false, 'Reject' %>
-    <input type="radio" id="team_vote_approve_true" name="team_vote[approve]" value="true" <%= "checked" if @team_vote.approve? %> />
-    <%= f.label :approve_true, 'Approve' %>
+  <div class="btn-group form-group" data-toggle="buttons" data-bind="checkbox: checkboxArray">
+    <label class="btn btn-primary <%= "active" if @team_vote.approve.nil? %>">
+      <input type="radio" id="team_vote_approve_null" name="team_vote[approve]" value="" <%= "checked" if @team_vote.approve.nil? %> />
+      No Vote
+    </label>
+    <label class="btn btn-primary <%= "active" if @team_vote.approve == false %>">
+      <input type="radio" id="team_vote_approve_false" name="team_vote[approve]" value="false" <%= "checked" if @team_vote.approve == false %> />
+      Reject
+    </label>
+    <label class="btn btn-primary <%= "active" if @team_vote.approve? %>">
+      <input type="radio" id="team_vote_approve_true" name="team_vote[approve]" value="true" <%= "checked" if @team_vote.approve? %> />
+      Approve
+    </label>
   </div>
   <%= f.hidden_field :team_id %>
   <%= f.hidden_field :player_assignment_id %>
   <%= hidden_field_tag :player_assignment_redirect, @player_assignment.id if @player_assignment %>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit nil, {class: "btn btn-default btn-lg"}%>
   </div>
 <% end %>

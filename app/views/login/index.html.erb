@@ -5,7 +5,7 @@
     <option value>Select Player</option>
   </select></p>
   <p><%= password_field_tag(:password, nil, placeholder: 'Password') %></p>
-  <p><%= submit_tag 'Login' %></p>
+  <p><%= submit_tag 'Login', {class: "btn btn-default btn-lg"} %></p>
 <% end %>
 
 <div style="display:none">
@@ -19,13 +19,10 @@
 <div>
   <%= link_to 'New Game', new_game_path %>
 </div>
-<span id='test1'>Swipe!</span>
 <script>
   var current_game_id = '';
   $('#game_id').change(function() {
     $('#player_assignment_' + current_game_id).replaceWith($('#player_assignment_' + this.value));
     current_game_id = this.value;
   });
-  $('body').on('swipeleft', function(){$('#test1').text('Left!')});
-  $('body').on('swiperight', function(){$('#test1').text('Right!')});
 </script>
