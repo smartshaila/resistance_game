@@ -17,10 +17,13 @@
 @import "bootstrap-sprockets"
 @import "bootstrap"
 
-body
+html, body
   font-family: Helvetica, Arial, Sans-Serif
   overflow-x: hidden
   height: 100%
+
+img
+  max-width: 100%
 
 .revealed_good
   background-color: #C0E6FF
@@ -36,7 +39,7 @@ body
 
 #content
   clear: right
-  width: 75%
+  width: 65%
 
 table, th, td
   border: 1px solid #999999
@@ -54,18 +57,18 @@ table, th, td
   left: 0
 
 .row-offcanvas-right .sidebar-offcanvas
-  right: -25% /* 6 columns */
+  right: -35%
 
 .row-offcanvas-left .sidebar-offcanvas
-  left: -25% /* 6 columns */
+  left: -35%
 
 .row-offcanvas-right.active
-  right: 25% /* 6 columns */
+  right: 35%
 
 .row-offcanvas-left.active
-  left: 25% /* 6 columns */
+  left: 35%
 
 .sidebar-offcanvas
   position: absolute
   top: 0
-  width: 25% /* 6 columns */
+  width: 35%
