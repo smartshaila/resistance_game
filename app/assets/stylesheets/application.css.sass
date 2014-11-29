@@ -60,19 +60,21 @@ th, td
 .row-offcanvas-left
   left: 0
 
-.row-offcanvas-right .sidebar-offcanvas
-  right: -35%
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px)
 
-.row-offcanvas-left .sidebar-offcanvas
-  left: -35%
+  .row-offcanvas-right .sidebar-offcanvas
+    right: -35%
 
-.row-offcanvas-right.active
-  right: 35%
+  .row-offcanvas-left .sidebar-offcanvas
+    left: -35%
 
-.row-offcanvas-left.active
-  left: 35%
+  .row-offcanvas-right.active
+    right: 35%
 
-.sidebar-offcanvas
-  position: absolute
-  top: 0
-  width: 35%
+  .row-offcanvas-left.active
+    left: 35%
+
+  .sidebar-offcanvas
+    position: absolute
+    top: 0
+    width: 35%
