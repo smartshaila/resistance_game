@@ -1,17 +1,17 @@
-<p>Player: <%= @player_assignment.player.name %><br />
-Role: <%= @player_assignment.role.name %></p>
-
+<h4>You (<%= @player_assignment.player.name %>) are <strong><%= @player_assignment.role.name %></strong></h4>
 <p>
   <%=image_tag("#{@player_assignment.role.name.downcase}.png") %>
 </p>
 
-<table>
+<% if @player_assignment.visible_relationships.size != 0 %>
+<table class="table table-bordered">
   <tr>
     <td><strong>Revealed</strong></td>
   </tr>
-  <% @visible_relationships.each do |info| %>
+  <% @player_assignment.visible_relationships.each do |info| %>
     <tr>
       <td class="revealed_<%= info[:faction].nil? ? 'unknown' : info[:faction].name.downcase %>"><%= info[:player].name %></td>
     </tr>
   <% end %>
 </table>
+<% end %>
