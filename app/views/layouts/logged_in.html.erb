@@ -20,6 +20,12 @@
         </div>
       </div>
       <div id='content'>
+        <% if notice %>
+          <div class="alert <%= "alert-#{flash[:type]}" if flash[:type] %>"><%= notice %></div>
+        <% end %>
+        <div id="game_status" class="alert alert-info">
+          <%= @player_assignment.game.status %>
+        </div>
         <%= yield %>
       </div>
     </div>

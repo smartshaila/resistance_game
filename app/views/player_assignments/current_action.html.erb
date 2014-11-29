@@ -1,10 +1,3 @@
-<% if notice %>
-  <div class="alert <%= "alert-#{flash[:type]}" if flash[:type] %>"><%= notice %></div>
-<% end %>
-
-<div id="game_status" class="alert alert-info">
-  <%= @player_assignment.game.status %>
-</div>
 <div id="team_assign">
   <%= render 'teams/form' if @renders[:team_assignments] %>
 </div>
