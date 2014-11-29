@@ -12,7 +12,7 @@ class Mission < ActiveRecord::Base
   end
 
   def voting_results
-    current_team.team_assignments.group_by(&:pass).map{|result, assignments|{result => assignments.size}}.inject({}){|res, curr| res.merge(curr)} if current_team.mission_voting_complete?
+    current_team.team_assignments.group_by(&:pass).map{|result, assignments|{result => assignments.size}}.inject({}){|res, curr| res.merge(curr)} if current_team.assignments_complete? and current_team.mission_voting_complete?
   end
 
   def result
