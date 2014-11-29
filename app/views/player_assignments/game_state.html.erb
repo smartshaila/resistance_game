@@ -1,6 +1,19 @@
 <% if notice %>
   <div class="alert <%= "alert-#{flash[:type]}" if flash[:type] %>"><%= notice %></div>
 <% end %>
+<div>
+  <strong>Game ID:</strong> <%= @player_assignment.game.id %>
+</div>
+<div>
+  <strong>Logged in as:</strong> <%= @player_assignment.player.name %>
+</div>
+<div class="current_king">
+  <strong>Current King:</strong> <%= @player_assignment.game.current_king.player.name %>
+</div>
+<div class="current_mission">
+  <strong>Current Mission:</strong> Mission #<%= @player_assignment.game.current_mission.mission_number + 1 %>
+</div>
+<br>
 <div class="mission_status">
   <% if @waiting_players.size > 0 %>
    Waiting for [<%= @waiting_players.map(&:name).join(', ') %>] to <%= @mission_status_text %>
@@ -8,36 +21,4 @@
 </div>
 <div class="scoreboard">
   <%= scoreboard_table @player_assignment.game %>
-</div>
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title">Game Information</h3>
-  </div>
-  <div class="panel-body">
-    <div>
-      <strong>Game ID:</strong> <%= @player_assignment.game.id %>
-    </div>
-    <div>
-      <strong>Logged in as:</strong> <%= @player_assignment.player.name %>
-    </div>
-    <div>
-      <strong>Playing with:</strong> <%= @player_assignment.game.player_assignments.size %> Players:
-      <%= @player_assignment.game.player_assignments.to_a.count{|pa| pa.role.faction.name.downcase == 'evil'} %> Evil,
-      <%= @player_assignment.game.player_assignments.to_a.count{|pa| pa.role.faction.name.downcase == 'good'} %> Good
-    </div>
-    <div>
-      <strong>Roles Included:</strong> <%= @player_assignment.game.player_assignments.map{|pa| pa.role.name}.uniq.to_sentence %>
-    </div>
-    <div>
-      <strong>Public Voting:</strong> <%= @player_assignment.game.public_vote ? 'Enabled' : 'Disabled' %>
-    </div>
-    <br>
-    <div class="current_king">
-      <strong>Current King:</strong> <%= @player_assignment.game.current_king.player.name %>
-    </div>
-    <div class="current_mission">
-      <strong>Current Mission:</strong> Mission #<%= @player_assignment.game.current_mission.mission_number + 1 %>
-    </div>
-    <br>
-  </div>
 </div>
