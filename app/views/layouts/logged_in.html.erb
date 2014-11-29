@@ -9,18 +9,15 @@
   <body>
   <div class="container-fluid">
     <div class="row row-offcanvas row-offcanvas-left">
-      <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
+      <div class="sidebar-offcanvas" id="sidebar" role="navigation">
         <div id='navigation' class='list-group'>
-            <%= link_to 'Game State', game_state_player_assignment_path(@player_assignment), {class: 'list-group-item'} %>
-            <%= link_to 'Revealed Info', revealed_info_player_assignment_path(@player_assignment), {class: 'list-group-item'} %>
-            <%= link_to 'Current Action', current_action_player_assignment_path(@player_assignment), {class: 'list-group-item'} %>
-            <%= link_to 'Game Log', game_log_player_assignment_path(@player_assignment), {class: 'list-group-item'} %>
+          <%= link_to 'Game State', game_state_player_assignment_path(@player_assignment), {class: 'list-group-item'} %>
+          <%= link_to 'Revealed Info', revealed_info_player_assignment_path(@player_assignment), {class: 'list-group-item'} %>
+          <%= link_to 'Current Action', current_action_player_assignment_path(@player_assignment), {class: 'list-group-item'} %>
+          <%= link_to 'Game Log', game_log_player_assignment_path(@player_assignment), {class: 'list-group-item'} %>
         </div>
       </div>
-      <div id='content' class="col-xs-12 col-sm-9">
-        <p class="pull-left">
-          <button type="button" id="nav-toggle" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
-        </p>
+      <div id='content'>
         <%= yield %>
       </div>
     </div>
