@@ -4,4 +4,5 @@ class PlayerAssignment < ActiveRecord::Base
   belongs_to :role
   has_many :sources, :class_name => 'Lady', :foreign_key => 'source_id', dependent: :destroy
   has_many :targets, :class_name => 'Lady', :foreign_key => 'target_id', dependent: :destroy
+  default_scope { includes(:player).order('players.name ASC') }
 end
