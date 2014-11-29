@@ -1,50 +1,57 @@
-<%= form_for(@team_vote) do |f| %>
-  <% if @team_vote.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@team_vote.errors.count, "error") %> prohibited this team_vote from being saved:</h2>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Team Voting</h3>
+  </div>
+  <div class="panel-body">
+    <%= form_for(@team_vote) do |f| %>
+      <% if @team_vote.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@team_vote.errors.count, "error") %> prohibited this team_vote from being saved:</h2>
 
-      <ul>
-      <% @team_vote.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+          <ul>
+          <% @team_vote.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
       <% end %>
-      </ul>
-    </div>
-  <% end %>
-  <% if @team_vote.player_assignment != @team_vote.team.mission.game.current_king %>
-    <table>
-      <thead>
-        <tr>
-          <th>Team Members</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @team_vote.team.team_assignments.each do |a| %>
-          <tr>
-            <td><%= a.player_assignment.player.name %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  <% end %>
-  <p><strong>Your Vote:</strong></p>
-  <div class="btn-group form-group" data-toggle="buttons" data-bind="checkbox: checkboxArray">
-    <label class="btn btn-primary <%= "active" if @team_vote.approve.nil? %>">
-      <input type="radio" id="team_vote_approve_null" name="team_vote[approve]" value="" <%= "checked" if @team_vote.approve.nil? %> />
-      No Vote
-    </label>
-    <label class="btn btn-primary <%= "active" if @team_vote.approve == false %>">
-      <input type="radio" id="team_vote_approve_false" name="team_vote[approve]" value="false" <%= "checked" if @team_vote.approve == false %> />
-      Reject
-    </label>
-    <label class="btn btn-primary <%= "active" if @team_vote.approve? %>">
-      <input type="radio" id="team_vote_approve_true" name="team_vote[approve]" value="true" <%= "checked" if @team_vote.approve? %> />
-      Approve
-    </label>
+      <% if @team_vote.player_assignment != @team_vote.team.mission.game.current_king %>
+        <table>
+          <thead>
+            <tr>
+              <th>Team Members</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @team_vote.team.team_assignments.each do |a| %>
+              <tr>
+                <td><%= a.player_assignment.player.name %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% end %>
+      <p><strong>Your Vote:</strong></p>
+      <div class="btn-group form-group" data-toggle="buttons" data-bind="checkbox: checkboxArray">
+        <label class="btn btn-primary <%= "active" if @team_vote.approve.nil? %>">
+          <input type="radio" id="team_vote_approve_null" name="team_vote[approve]" value="" <%= "checked" if @team_vote.approve.nil? %> />
+          No Vote
+        </label>
+        <label class="btn btn-primary <%= "active" if @team_vote.approve == false %>">
+          <input type="radio" id="team_vote_approve_false" name="team_vote[approve]" value="false" <%= "checked" if @team_vote.approve == false %> />
+          Reject
+        </label>
+        <label class="btn btn-primary <%= "active" if @team_vote.approve? %>">
+          <input type="radio" id="team_vote_approve_true" name="team_vote[approve]" value="true" <%= "checked" if @team_vote.approve? %> />
+          Approve
+        </label>
+      </div>
+      <%= f.hidden_field :team_id %>
+      <%= f.hidden_field :player_assignment_id %>
+      <%= hidden_field_tag :player_assignment_redirect, @player_assignment.id if @player_assignment %>
+      <div class="actions">
+        <%= f.submit 'Vote', {class: "btn btn-default btn-lg"}%>
+      </div>
+    <% end %>
   </div>
-  <%= f.hidden_field :team_id %>
-  <%= f.hidden_field :player_assignment_id %>
-  <%= hidden_field_tag :player_assignment_redirect, @player_assignment.id if @player_assignment %>
-  <div class="actions">
-    <%= f.submit 'Vote', {class: "btn btn-default btn-lg"}%>
-  </div>
-<% end %>
+</div>

@@ -1,33 +1,35 @@
-<%= form_for(@team) do |f| %>
-  <% if @team.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@team.errors.count, "error") %> prohibited this team from being saved:</h2>
-
-      <ul>
-      <% @team.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <p><strong>Mission #<%= @team.mission.mission_number + 1%></strong></p>
-  <p>
-    <strong>Players on Team:</strong>
-    <br />
-    <div class="btn-group form-group" data-toggle="buttons" data-bind="checkbox: checkboxArray">
-      <% @team.mission.game.player_assignments.each do |pa| %>
-        <% selected = @team.team_assignments.map(&:player_assignment).include?(pa) %>
-        <label class="btn btn-primary <%= 'active' if selected %>">
-          <input type="checkbox" value="<%= pa.id %>" name="team[team_assignments][]" <%= "checked" if selected %> />
-          <%= pa.player.name %>
-        </label>
-      <% end %>
-    </div>
-  </p>
-  <%= hidden_field_tag :player_assignment_redirect, @player_assignment.id if @player_assignment %>
-  <%= f.hidden_field :id %>
-  <div class="actions">
-    <%= f.submit nil, {class: "btn btn-default btn-lg"} %>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Mission #<%= @team.mission.mission_number + 1%></h3>
   </div>
-<% end %>
+  <div class="panel-body">
+    <%= form_for(@team) do |f| %>
+      <% if @team.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@team.errors.count, "error") %> prohibited this team from being saved:</h2>
+
+          <ul>
+          <% @team.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <p><strong>Select <%= @team.mission.capacity.capacity %> Players for this Team:</strong></p>
+        <div class="btn-group form-group" data-toggle="buttons" data-bind="checkbox: checkboxArray">
+          <% @team.mission.game.player_assignments.each do |pa| %>
+            <% selected = @team.team_assignments.map(&:player_assignment).include?(pa) %>
+            <label class="btn btn-primary <%= 'active' if selected %>">
+              <input type="checkbox" value="<%= pa.id %>" name="team[team_assignments][]" <%= "checked" if selected %> />
+              <%= pa.player.name %>
+            </label>
+          <% end %>
+        </div>
+      <%= hidden_field_tag :player_assignment_redirect, @player_assignment.id if @player_assignment %>
+      <%= f.hidden_field :id %>
+      <div class="actions">
+        <%= f.submit nil, {class: "btn btn-default btn-lg"} %>
+      </div>
+    <% end %>
+  </div>
+</div>
