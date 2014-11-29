@@ -15,15 +15,19 @@
   <p>
     <strong>Players on Team:</strong>
     <br />
-    <% @team.mission.game.player_assignments.each do |pa| %>
-      <%= check_box_tag('team[team_assignments][]', pa.id, @team.team_assignments.map(&:player_assignment).include?(pa)) %>
-      <%= pa.player.name %>
-      <br />
-    <% end %>
+    <div class="btn-group form-group" data-toggle="buttons" data-bind="checkbox: checkboxArray">
+      <% @team.mission.game.player_assignments.each do |pa| %>
+        <% selected = @team.team_assignments.map(&:player_assignment).include?(pa) %>
+        <label class="btn btn-primary <%= 'active' if selected %>">
+          <input type="checkbox" value="<%= pa.id %>" name="team[team_assignments][]" <%= "checked" if selected %> />
+          <%= pa.player.name %>
+        </label>
+      <% end %>
+    </div>
   </p>
   <%= hidden_field_tag :player_assignment_redirect, @player_assignment.id if @player_assignment %>
   <%= f.hidden_field :id %>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit nil, {class: "btn btn-default btn-lg"} %>
   </div>
 <% end %>
