@@ -1,6 +1,12 @@
 <% if notice %>
   <div class="alert <%= "alert-#{flash[:type]}" if flash[:type] %>"><%= notice %></div>
 <% end %>
+<div>
+  <strong>Game ID:</strong> <%= @player_assignment.game.id %>
+</div>
+<div>
+  <strong>Logged in as:</strong> <%= @player_assignment.player.name %>
+</div>
 <div class="current_king">
   <strong>Current King:</strong> <%= @player_assignment.game.current_king.player.name %>
 </div>
