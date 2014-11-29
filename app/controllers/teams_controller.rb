@@ -42,11 +42,14 @@ class TeamsController < ApplicationController
   # PATCH/PUT /teams/1.json
   def update
     notice = 'Team has not been changed yet'
+    type = 'warning'
     assigned_players = (params[:team][:team_assignments] or [])
     if @team.team_voting_complete?
       notice = 'Team voting is already complete'
+      type = 'danger'
     elsif assigned_players.size > @team.mission.capacity.capacity
       notice = 'You have selected too many people for this team'
+      type = 'danger'
     else
       @team.team_assignments.destroy_all
       @team.team_votes.destroy_all
@@ -54,11 +57,12 @@ class TeamsController < ApplicationController
         TeamAssignment.create(team: @team, player_assignment_id: pa.to_i)
       end
       notice = 'Team was successfully updated' if @team.update(team_params)
+      type = 'success'
     end
 
     respond_to do |format|
       if params.include? :player_assignment_redirect
-          format.html { redirect_to({controller: :player_assignments, action: :current_action, id: params[:player_assignment_redirect]}, notice: notice) }
+          format.html { redirect_to({controller: :player_assignments, action: :current_action, id: params[:player_assignment_redirect]}, {notice: notice, flash: {type: type}}) }
       else
         format.html { render :edit, notice: notice }
         format.json { render json: @team.errors, status: :unprocessable_entity }
