@@ -12,7 +12,6 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require jquery.mobile.touch
 //= require turbolinks
 //= require bootstrap-sprockets
 //= require_tree .
