@@ -22,12 +22,12 @@
         failed = @team_assignment.pass == false
         passed = @team_assignment.pass?
       %>
-      <div class="btn-group form-group" data-toggle="buttons" data-bind="checkbox: checkboxArray">
-        <label class="btn btn-primary<%= ' active' if failed %><%= ' disabled' if fail_disabled %>">
+      <div class="form-group" data-toggle="buttons" data-bind="checkbox: checkboxArray">
+        <label class="btn btn-primary btn-block <%= ' active' if failed %><%= ' disabled' if fail_disabled %>">
           <input type="radio" id="team_assignment_pass_false" name="team_assignment[pass]" value="false" <%= "checked" if failed %> <%= "disabled" if fail_disabled %> />
           Fail
         </label>
-        <label class="btn btn-primary<%= ' active' if passed %><%= ' disabled' if pass_disabled %>">
+        <label class="btn btn-primary btn-block <%= ' active' if passed %><%= ' disabled' if pass_disabled %>">
           <input type="radio" id="team_assignment_pass_true" name="team_assignment[pass]" value="true" <%= "checked" if passed %> <%= "disabled" if pass_disabled %> />
           Pass
         </label>
