@@ -1,6 +1,6 @@
 <% @player_assignment.game.missions.reverse.each do |mission| %>
+  <h3>Mission #<%= mission.mission_number + 1 %> - <%= mission.capacity.capacity %> Players</h3>
   <% mission.teams.reverse.each do |team| %>
-    <h3>Mission #<%= mission.mission_number + 1 %> - <%= mission.capacity.capacity %> Players</h3>
     <% if team.assignments_complete? %>
       Team of <%= team.team_assignments.map{|ta| ta.player_assignment.player.name }.to_sentence %> was proposed.<br />
     <% end %>
