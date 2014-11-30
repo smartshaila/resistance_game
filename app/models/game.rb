@@ -69,7 +69,17 @@ class Game < ActiveRecord::Base
   end
 
   def status
-    if !current_team.assignments_complete?
+    if complete?
+      method = ''
+      if !self.assassinated_assignment.nil? and self.assassinated_assignment.role.name == 'Merlin'
+        method = "assassination of #{self.assassinated_assignment.player.name}"
+      elsif current_team.team_voting_complete? and !current_team.approved?
+        method = "team rejections"
+      else
+        method = "missions"
+      end
+      "Game over. #{winning_faction.name} wins through #{method}!"
+    elsif !current_team.assignments_complete?
       "Waiting for #{current_king.player.name.capitalize} to pick a team of #{current_mission.capacity.capacity} players..."
     elsif !current_team.team_voting_complete?
       pending_player_assignments = self.player_assignments - current_team.team_votes.where.not(approve: nil).map{|vote| vote.player_assignment}
@@ -78,7 +88,7 @@ class Game < ActiveRecord::Base
     elsif !current_team.mission_voting_complete?
       "Waiting for #{current_team.team_assignments.where(pass: nil).map{|assignment| assignment.player_assignment.player.name}.to_sentence} to vote on the mission..."
     else
-      'Game over!'
+      'Game over? [This is a bug]'
     end
   end
 end
