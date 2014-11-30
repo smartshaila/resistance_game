@@ -1,5 +1,5 @@
 class PlayerAssignmentsController < ApplicationController
-  before_action :set_player_assignment, only: [:show, :edit, :update, :destroy, :revealed_info, :game_state, :current_action, :game_log]
+  before_action :set_player_assignment, only: [:show, :edit, :update, :destroy, :revealed_info, :game_state, :current_action, :game_log, :assassinate]
   layout 'logged_in'
 
   # GET /player_assignments
@@ -63,6 +63,16 @@ class PlayerAssignmentsController < ApplicationController
   end
 
   def revealed_info
+  end
+
+  def assassinate
+    aa = params[:hit_list].first
+    unless aa.nil?
+      @player_assignment.game.update(assassinated_assignment_id: aa.to_i)
+    end
+    if params.include? :player_assignment_redirect
+      redirect_to({controller: :player_assignments, action: :game_state, id: params[:player_assignment_redirect]}, {notice: "Assassination completed", flash: {type: 'success'}})
+    end
   end
 
   def game_state

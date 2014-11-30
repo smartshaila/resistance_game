@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     post 'assign_team', on: :member
     post 'mission_vote', on: :member
     get 'game_log', on: :member
+    post 'assassinate', on: :member
   end
   resources :roles
   resources :factions

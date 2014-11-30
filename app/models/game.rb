@@ -51,7 +51,7 @@ class Game < ActiveRecord::Base
   end
 
   def complete?
-    current_team.team_voting_complete? and (!current_team.approved? or current_team.mission_voting_complete?)
+    !assassinated_assignment.nil? or (current_team.team_voting_complete? and (!current_team.approved? or current_team.mission_voting_complete?))
   end
 
   def mission_results
