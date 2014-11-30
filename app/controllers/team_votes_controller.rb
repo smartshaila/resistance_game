@@ -1,5 +1,5 @@
 class TeamVotesController < ApplicationController
-  before_action :set_team_vote, only: [:show, :edit, :update, :destroy] 
+  before_action :set_team_vote, only: [:show, :edit, :update, :destroy]
 
   # GET /team_votes
   # GET /team_votes.json
@@ -28,7 +28,7 @@ class TeamVotesController < ApplicationController
   def create
     @team_vote = TeamVote.create(team_vote_params)
 
-    if @team_vote.team.team_voting_complete? and not @team_vote.approve? and @team_vote.mission.teams.size < @team_vote.game.mission_capacities.size
+    if @team_vote.team.team_voting_complete? and not @team_vote.team.approved? and @team_vote.mission.teams.size < @team_vote.game.mission_capacities.size
       Team.create(mission: @team_vote.team.mission)
     end
 
