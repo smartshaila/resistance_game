@@ -32,7 +32,7 @@ class Game < ActiveRecord::Base
   end
 
   def current_king
-    no_of_teams = self.teams.to_a.count {|t| t.assignments_complete? and t.team_voting_complete? }
+    no_of_teams = self.teams.to_a.count {|t| t.assignments_complete? and t.team_voting_complete?}
     no_of_players = self.player_assignments.size
     king_seat = no_of_teams % no_of_players
     self.player_assignments.where("seat_number = ?", king_seat).first
