@@ -1,6 +1,3 @@
-<% if notice %>
-  <div class="alert <%= "alert-#{flash[:type]}" if flash[:type] %>"><%= notice %></div>
-<% end %>
 <div class="mission_status">
   <% if @waiting_players.size > 0 %>
     Waiting for [<%= @waiting_players.map(&:name).join(', ') %>] to <%= @mission_status_text %>
