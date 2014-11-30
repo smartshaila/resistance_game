@@ -32,7 +32,7 @@ class Game < ActiveRecord::Base
   end
 
   def current_king
-    no_of_teams = self.teams.to_a.count {|t| t.assignments_complete? and t.team_voting_complete? }
+    no_of_teams = self.teams.to_a.count {|t| t.assignments_complete? and t.team_voting_complete?}
     no_of_players = self.player_assignments.size
     king_seat = no_of_teams % no_of_players
     self.player_assignments.where("seat_number = ?", king_seat).first
@@ -54,6 +54,20 @@ class Game < ActiveRecord::Base
     current_team.team_voting_complete? and (!current_team.approved? or current_team.mission_voting_complete?)
   end
 
+  def mission_results
+    self.missions.group_by(&:result).map{|result, missions| {result => missions.size}}.inject({}){|res, curr| res.merge(curr)}
+  end
+
+  def winning_faction
+    if self.complete?
+      if mission_results[true] > mission_results[false] or (!self.assassinated_assignment.nil? and self.assassinated_assignment.role.name != 'Merlin')
+        Faction.find_by(name: 'Good')
+      else
+        Faction.find_by(name: 'Evil')
+      end
+    end
+  end
+
   def status
     if !current_team.assignments_complete?
       "Waiting for #{current_king.player.name.capitalize} to pick a team of #{current_mission.capacity.capacity} players..."
@@ -66,7 +80,5 @@ class Game < ActiveRecord::Base
     else
       'Game over!'
     end
-
-
   end
 end
