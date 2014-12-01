@@ -15,12 +15,13 @@
     <% end %>
   </table>
   <% if @player_assignment.role.name == 'Assassin' and !@player_assignment.game.assassinated_assignment %>
-    <%= form_tag({controller: 'player_assignments', action:'assassinate'}, {method: 'post'}) do %>
-      <h4>Assassinate:</h4>
-      <% good_players = @player_assignment.game.player_assignments.to_a.select{|pa| pa.role.faction.name == 'Good'} %>
-      <%= select('hit_list', '', good_players.map{|pa| [pa.player.name, pa.id]}, {prompt: 'Select a Player'}, {class: 'form-control'}) %>
+    <%= form_tag({controller: 'player_assignments', action:'assassinate'}, {method: 'post', class: 'form-inline'}) do %>
+      <!--Maybe add a column to role target? to determine whether they can be assassinated-->
+      <% hit_list = @player_assignment.game.player_assignments.to_a.select{|pa| (pa.role.faction.name == 'Good' or pa.role.name == 'Oberon')} %>
+      <%= select('hit_list', '', hit_list.map{|pa| [pa.player.name, pa.id]}, {prompt: 'Select a Player'}, {class: 'form-control form-group'}) %>
+      <!--Fix redirect: It shouldn't go if there isn't anyone selected-->
       <%= hidden_field_tag :player_assignment_redirect, @player_assignment.id if @player_assignment %>
-      <p><%= submit_tag 'Assassinate', {class: "btn btn-default btn-lg"} %></p>
+      <%= submit_tag 'Assassinate', {class: "btn btn-primary"} %>
     <% end %>
   <% end %>
 <% end %>
