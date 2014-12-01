@@ -17,4 +17,8 @@ class PlayerAssignment < ActiveRecord::Base
       end
     }.compact
   end
+
+  def winning?
+    self.game.winning_faction == self.role.faction
+  end
 end
