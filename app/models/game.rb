@@ -60,7 +60,7 @@ class Game < ActiveRecord::Base
 
   def winning_faction
     if self.complete?
-      if mission_results[true] > mission_results[false] or (!self.assassinated_assignment.nil? and self.assassinated_assignment.role.name != 'Merlin')
+      if (mission_results[true] or 0) > (mission_results[false] or 0) or (!self.assassinated_assignment.nil? and self.assassinated_assignment.role.name != 'Merlin')
         Faction.find_by(name: 'Good')
       else
         Faction.find_by(name: 'Evil')
