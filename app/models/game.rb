@@ -41,8 +41,7 @@ class Game < ActiveRecord::Base
   end
 
   def current_lady
-    lady = self.ladies.max_by(&:mission_number)
-    lady.target.nil? ? lady.source : lady.target
+      self.ladies.max_by(&:mission_number)
   end
 
   def current_king
@@ -94,7 +93,7 @@ class Game < ActiveRecord::Base
       end
       "Game over. #{winning_faction.name} wins through #{method}!"
     elsif current_mission.mission_number == current_lady.mission_number and current_lady.target.nil?
-      "Waiting for #{current_lady.player.name.capitalize} to lady someone..."
+      "Waiting for #{current_lady.source.player.name.capitalize} to lady someone..."
     elsif !current_team.assignments_complete?
       "Waiting for #{current_king.player.name.capitalize} to pick a team of #{current_mission.capacity.capacity} players..."
     elsif !current_team.team_voting_complete?

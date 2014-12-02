@@ -11,25 +11,9 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :game_id %><br>
-    <%= f.text_field :game_id %>
-  </div>
-  <div class="field">
-    <%= f.label :source_id %><br>
-    <%= f.number_field :source_id %>
-  </div>
-  <div class="field">
-    <%= f.label :target_id %><br>
-    <%= f.number_field :target_id %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-
   <% ladies = Lady.where(target: @lady.source) %>
   <% lady_list = @lady.game.player_assignments.to_a.select{|pa| !ladies.any?{|l| l.source == pa} and pa != @lady.source} %>
-  <%= select('target', '', lady_list.map{|pa| [pa.player.name, pa.id]}, {prompt: 'Select a Player', class: 'form-control form-group'}) %>
+  <%= select('target', '', lady_list.map{|pa| [pa.player.name, pa.id]}, {prompt: 'Select a Player'}, {class: 'form-control form-group'}) %>
   <%= hidden_field_tag :player_assignment_redirect, @player_assignment.id if @player_assignment %>
   <%= f.submit 'Lady', {class: "btn btn-primary"}%>
 <% end %>
