@@ -83,15 +83,16 @@ class PlayerAssignmentsController < ApplicationController
   def current_action
     is_king = @player_assignment == @player_assignment.game.current_king
     is_questing = @player_assignment.game.current_team.team_assignments.any? {|assignment| assignment.player_assignment == @player_assignment}
-    is_lady = @player_assignment == @player_assignment.game.current_lady.source
-    target_exists = !@player_assignment.game.current_lady.target.nil?
+    current_lady = @player_assignment.game.current_mission.lady
+    is_lady = (!current_lady.nil? and @player_assignment == current_lady.source)
+    lady_complete = (current_lady.nil? or !current_lady.target.nil?)
     team_assigned = @player_assignment.game.current_team.assignments_complete?
     voting_complete = @player_assignment.game.current_team.team_voting_complete?
     mission_complete = @player_assignment.game.current_team.mission_voting_complete?
 
     @renders = {}
-    @renders[:ladies] = (is_lady and not team_assigned and not target_exists)
-    @renders[:team_assignments] = (is_king and not voting_complete)
+    @renders[:ladies] = (is_lady and not team_assigned and not lady_complete)
+    @renders[:team_assignments] = (is_king and lady_complete and not voting_complete)
     @renders[:team_votes] = (team_assigned and not voting_complete)
     @renders[:mission_votes] = (team_assigned and voting_complete and is_questing and not mission_complete)
 

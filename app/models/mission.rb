@@ -22,4 +22,8 @@ class Mission < ActiveRecord::Base
   def capacity
     MissionCapacity.find_by(player_count: self.game.player_assignments.size, mission_number: self.mission_number)
   end
+
+  def lady
+    self.game.ladies.where(mission_number: self.mission_number).first
+  end
 end
