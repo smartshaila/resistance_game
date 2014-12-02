@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141126123417) do
+ActiveRecord::Schema.define(version: 20141202033846) do
 
   create_table "factions", force: true do |t|
     t.string   "name"
@@ -28,14 +28,13 @@ ActiveRecord::Schema.define(version: 20141126123417) do
   end
 
   create_table "ladies", force: true do |t|
-    t.integer  "mission_id"
     t.integer  "source_id"
     t.integer  "target_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "game_id"
+    t.integer  "mission_number"
   end
-
-  add_index "ladies", ["mission_id"], name: "index_ladies_on_mission_id"
 
   create_table "lancelots", force: true do |t|
     t.boolean  "switched"

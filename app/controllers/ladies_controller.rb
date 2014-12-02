@@ -69,6 +69,6 @@ class LadiesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def lady_params
-      params.require(:lady).permit(:mission_id, :source_id, :target_id)
+      params.require(:lady).permit(:game_id, :mission_number, :source_id, :target_id)
     end
 end

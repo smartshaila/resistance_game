@@ -5,6 +5,7 @@ class Game < ActiveRecord::Base
   has_many :players, through: :player_assignments
   has_many :roles, through: :player_assignments
   has_many :teams, through: :missions
+  has_many :ladies
 
   def game_setup (players, roles)
     set_assignments(players, roles)
@@ -25,10 +26,23 @@ class Game < ActiveRecord::Base
   end
 
   def increment_mission
-    unless [self.missions.to_a.count {|m| m.result }, self.missions.to_a.count {|m| m.result == false }].any? {|r| r > mission_capacities.size * 0.5}
+    half_of_missions = mission_capacities.size * 0.5
+    unless [self.missions.to_a.count {|m| m.result }, self.missions.to_a.count {|m| m.result == false }].any? {|r| r > half_of_missions}
       m = Mission.create(game: self, mission_number: self.missions.size)
       Team.create(mission: m)
+      if self.ladies.empty?
+        Lady.create(game: self, mission_number: half_of_missions.floor, source: self.player_assignments.max_by(&:seat_number))
+      end
+      l = self.ladies.where(mission_number: m.mission_number-1)
+      unless l.empty? or l.target.nil?
+        Lady.create(game: self, mission_number: m.mission_number, source: l.target)
+      end
     end
+  end
+
+  def current_lady
+    lady = self.ladies.max_by(&:mission_number)
+    lady.target.nil? ? lady.source : lady.target
   end
 
   def current_king
@@ -60,7 +74,7 @@ class Game < ActiveRecord::Base
 
   def winning_faction
     if self.complete?
-      if mission_results[true] > mission_results[false] or (!self.assassinated_assignment.nil? and self.assassinated_assignment.role.name != 'Merlin')
+      if (mission_results[true] or 0) > (mission_results[false] or 0) or (!self.assassinated_assignment.nil? and self.assassinated_assignment.role.name != 'Merlin')
         Faction.find_by(name: 'Good')
       else
         Faction.find_by(name: 'Evil')
@@ -79,6 +93,8 @@ class Game < ActiveRecord::Base
         method = "missions"
       end
       "Game over. #{winning_faction.name} wins through #{method}!"
+    elsif current_mission.mission_number == current_lady.mission_number and current_lady.target.nil?
+      "Waiting for #{current_lady.player.name.capitalize} to lady someone..."
     elsif !current_team.assignments_complete?
       "Waiting for #{current_king.player.name.capitalize} to pick a team of #{current_mission.capacity.capacity} players..."
     elsif !current_team.team_voting_complete?
