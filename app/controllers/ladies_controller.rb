@@ -44,7 +44,8 @@ class LadiesController < ApplicationController
 
     respond_to do |format|
       if @lady.update(lady_params)
-        notice = "#{@lady.source.player.name.capitalize} used the Lady on #{@lady.target.player.name.capitalize}"
+        notice = "The Lady revealed #{@lady.target.player.name.capitalize} as #{@lady.target.role.faction.name.capitalize}"
+        # notice = "#{@lady.source.player.name.capitalize} used the Lady on #{@lady.target.player.name.capitalize}"
         type = 'info'
         if params.include? :player_assignment_redirect
           format.html { redirect_to({controller: :player_assignments, action: :game_state, id: params[:player_assignment_redirect]}, {notice: notice, flash: {type: type}}) }
