@@ -81,16 +81,11 @@ class PlayerAssignmentsController < ApplicationController
   end
 
   def current_action
-    is_king = @player_assignment == @player_assignment.game.current_king
-    is_questing = @player_assignment.game.current_team.team_assignments.any? {|assignment| assignment.player_assignment == @player_assignment}
-    team_assigned = @player_assignment.game.current_team.assignments_complete?
-    voting_complete = @player_assignment.game.current_team.team_voting_complete?
-    mission_complete = @player_assignment.game.current_team.mission_voting_complete?
-
+    current_state = game_state_hash
     @renders = {}
-    @renders[:team_assignments] = (is_king and not voting_complete)
-    @renders[:team_votes] = (team_assigned and not voting_complete)
-    @renders[:mission_votes] = (team_assigned and voting_complete and is_questing and not mission_complete)
+    @renders[:team_assignments] = (game_state_hash[:is_king] and not game_state_hash[:voting_complete])
+    @renders[:team_votes] = (game_state_hash[:team_assigned] and not game_state_hash[:voting_complete])
+    @renders[:mission_votes] = (game_state_hash[:team_assigned] and game_state_hash[:voting_complete] and game_state_hash[:is_questing] and not game_state_hash[:mission_complete])
 
     if @renders[:team_assignments]
       @team = @player_assignment.game.current_team
@@ -122,5 +117,14 @@ class PlayerAssignmentsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def player_assignment_params
       params.require(:player_assignment).permit(:seat_number, :game_id, :player_id, :role_id)
+    end
+
+    def game_state_hash
+      is_king = @player_assignment == @player_assignment.game.current_king
+      is_questing = @player_assignment.game.current_team.team_assignments.any? {|assignment| assignment.player_assignment == @player_assignment}
+      team_assigned = @player_assignment.game.current_team.assignments_complete?
+      voting_complete = @player_assignment.game.current_team.team_voting_complete?
+      mission_complete = @player_assignment.game.current_team.mission_voting_complete?
+      {is_king: is_king, is_questing: is_questing, team_assigned: team_assigned, voting_complete: voting_complete, mission_complete: mission_complete}
     end
 end
