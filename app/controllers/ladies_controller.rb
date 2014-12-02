@@ -40,6 +40,12 @@ class LadiesController < ApplicationController
   # PATCH/PUT /ladies/1
   # PATCH/PUT /ladies/1.json
   def update
+
+    target = params[:target].first
+    unless target.nil?
+      @lady.update(target_id: target.to_i)
+    end
+
     respond_to do |format|
       if @lady.update(lady_params)
         format.html { redirect_to @lady, notice: 'Lady was successfully updated.' }
