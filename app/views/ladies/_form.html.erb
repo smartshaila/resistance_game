@@ -13,7 +13,7 @@
 
   <% ladies = Lady.where(target: @lady.source) %>
   <% lady_list = @lady.game.player_assignments.to_a.select{|pa| !ladies.any?{|l| l.source == pa} and pa != @lady.source} %>
-  <%= select('target', '', lady_list.map{|pa| [pa.player.name, pa.id]}, {prompt: 'Select a Player'}, {class: 'form-control form-group'}) %>
+  <%= f.select(:target_id, lady_list.map{|pa| [pa.player.name, pa.id]}, {include_blank: 'Select a target'}, {class: 'form-control form-group'}) %>
   <%= hidden_field_tag :player_assignment_redirect, @player_assignment.id if @player_assignment %>
   <%= f.submit 'Lady', {class: "btn btn-primary"}%>
 <% end %>

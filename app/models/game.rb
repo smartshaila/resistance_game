@@ -33,9 +33,10 @@ class Game < ActiveRecord::Base
       if self.ladies.empty?
         Lady.create(game: self, mission_number: half_of_missions.floor, source: self.player_assignments.max_by(&:seat_number))
       end
+      # This needs fixing:
       l = self.ladies.where(mission_number: m.mission_number-1)
-      unless l.empty? or l.target.nil?
-        Lady.create(game: self, mission_number: m.mission_number, source: l.target)
+      unless l.empty? or l.first.target.nil?
+        Lady.create(game: self, mission_number: m.mission_number, source: l.first.target)
       end
     end
   end
@@ -93,7 +94,7 @@ class Game < ActiveRecord::Base
       end
       "Game over. #{winning_faction.name} wins through #{method}!"
     elsif current_mission.mission_number == current_lady.mission_number and current_lady.target.nil?
-      "Waiting for #{current_lady.source.player.name.capitalize} to lady someone..."
+      "Waiting for #{current_lady.source.player.name.capitalize} to use the Lady on someone..."
     elsif !current_team.assignments_complete?
       "Waiting for #{current_king.player.name.capitalize} to pick a team of #{current_mission.capacity.capacity} players..."
     elsif !current_team.team_voting_complete?

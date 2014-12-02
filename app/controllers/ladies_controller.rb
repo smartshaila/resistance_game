@@ -41,15 +41,14 @@ class LadiesController < ApplicationController
   # PATCH/PUT /ladies/1.json
   def update
 
-    target = params[:target].first
-    unless target.nil?
-      @lady.update(target_id: target.to_i)
-    end
 
     respond_to do |format|
       if @lady.update(lady_params)
-        format.html { redirect_to @lady, notice: 'Lady was successfully updated.' }
-        format.json { render :show, status: :ok, location: @lady }
+        notice = "#{@lady.source.player.name.capitalize} used the Lady on #{@lady.target.player.name.capitalize}"
+        type = 'info'
+        if params.include? :player_assignment_redirect
+          format.html { redirect_to({controller: :player_assignments, action: :game_state, id: params[:player_assignment_redirect]}, {notice: notice, flash: {type: type}}) }
+        end
       else
         format.html { render :edit }
         format.json { render json: @lady.errors, status: :unprocessable_entity }
