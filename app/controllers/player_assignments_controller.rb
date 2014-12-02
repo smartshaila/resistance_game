@@ -63,6 +63,13 @@ class PlayerAssignmentsController < ApplicationController
   end
 
   def revealed_info
+    @revealed = @player_assignment.game.ladies.select{|l| l.source == @player_assignment and not l.target.nil?}.map{|lady|
+      {
+        player: lady.target.player,
+        faction: lady.target.role.faction
+      }
+    }
+    @revealed += (@player_assignment.visible_relationships.select{|hash| !@revealed.include? hash[:player]})
   end
 
   def assassinate

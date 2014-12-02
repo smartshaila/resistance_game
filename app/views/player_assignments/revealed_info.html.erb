@@ -3,25 +3,24 @@
   <%=image_tag("#{@player_assignment.role.name.downcase}.png") %>
 </p>
 
-<% if @player_assignment.visible_relationships.size != 0 %>
+<% if @revealed.size != 0 %>
   <table class="table table-bordered">
     <tr>
       <td><strong>Revealed</strong></td>
     </tr>
-    <% @player_assignment.visible_relationships.each do |info| %>
+    <% @revealed.each do |info| %>
       <tr>
         <td class="revealed_<%= info[:faction].nil? ? 'unknown' : info[:faction].name.downcase %>"><%= info[:player].name %></td>
       </tr>
     <% end %>
   </table>
-  <% if @player_assignment.role.name == 'Assassin' and !@player_assignment.game.assassinated_assignment %>
-    <%= form_tag({controller: 'player_assignments', action:'assassinate'}, {method: 'post', class: 'form-inline'}) do %>
-      <!--Maybe add a column to role target? to determine whether they can be assassinated-->
-      <% hit_list = @player_assignment.game.player_assignments.to_a.select{|pa| (pa.role.faction.name == 'Good' or pa.role.name == 'Oberon')} %>
-      <%= select('hit_list', '', hit_list.map{|pa| [pa.player.name, pa.id]}, {prompt: 'Select a Player'}, {class: 'form-control form-group'}) %>
-      <!--Fix redirect: It shouldn't go if there isn't anyone selected-->
-      <%= hidden_field_tag :player_assignment_redirect, @player_assignment.id if @player_assignment %>
-      <%= submit_tag 'Assassinate', {class: "btn btn-primary"} %>
-    <% end %>
+<% end %>
+
+<% if @player_assignment.role.name == 'Assassin' and !@player_assignment.game.assassinated_assignment %>
+  <%= form_tag({controller: 'player_assignments', action:'assassinate'}, {method: 'post', class: 'form-inline'}) do %>
+    <% hit_list = @player_assignment.game.player_assignments.to_a.select{|pa| (pa.role.faction.name == 'Good' or pa.role.name == 'Oberon')} %>
+    <%= select('hit_list', '', hit_list.map{|pa| [pa.player.name, pa.id]}, {prompt: 'Select a Player'}, {class: 'form-control form-group'}) %>
+    <%= hidden_field_tag :player_assignment_redirect, @player_assignment.id if @player_assignment %>
+    <%= submit_tag 'Assassinate', {class: "btn btn-primary"} %>
   <% end %>
 <% end %>
