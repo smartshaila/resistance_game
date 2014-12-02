@@ -92,7 +92,7 @@ class Game < ActiveRecord::Base
         method = "missions"
       end
       "Game over. #{winning_faction.name} wins through #{method}!"
-    elsif current_mission.mission_number == current_lady.mission_number and current_lady.target.nil?
+    elsif not current_lady.nil? and current_lady.target.nil? and current_mission.mission_number == current_lady.mission_number
       "Waiting for #{current_lady.source.player.name.capitalize} to use the Lady on someone..."
     elsif !current_team.assignments_complete?
       "Waiting for #{current_king.player.name.capitalize} to pick a team of #{current_mission.capacity.capacity} players..."
