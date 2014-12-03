@@ -64,7 +64,8 @@ class Game < ActiveRecord::Base
   end
 
   def complete?
-    !assassinated_assignment.nil? or (current_team.team_voting_complete? and (!current_team.approved? or current_team.mission_voting_complete?))
+    mr = mission_results
+    !assassinated_assignment.nil? or (current_team.team_voting_complete? and (!current_team.approved? or (current_team.mission_voting_complete? and (mr[false] or 0) > (mr[true] or 0))))
   end
 
   def mission_results
@@ -73,7 +74,7 @@ class Game < ActiveRecord::Base
 
   def winning_faction
     if self.complete?
-      if ((mission_results[true] or 0) > (mission_results[false] or 0) and (self.assassinated_assignment.nil? or self.assassinated_assignment.role.name != 'Merlin'))
+      if (mission_results[true] or 0) > (mission_results[false] or 0) or (!self.assassinated_assignment.nil? and self.assassinated_assignment.role.name != 'Merlin')
         Faction.find_by(name: 'Good')
       else
         Faction.find_by(name: 'Evil')
@@ -103,7 +104,8 @@ class Game < ActiveRecord::Base
     elsif !current_team.mission_voting_complete?
       "Waiting for #{current_team.team_assignments.where(pass: nil).map{|assignment| assignment.player_assignment.player.name}.to_sentence} to vote on the mission..."
     else
-      'Game over? [This is a bug]'
+      assassin = self.player_assignments.select{|pa| pa.role.name == 'Assassin'}
+      "Waiting for #{assassin.player.name} to kill someone..."
     end
   end
 end
