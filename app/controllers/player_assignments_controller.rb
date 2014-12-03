@@ -84,8 +84,7 @@ class PlayerAssignmentsController < ApplicationController
   end
 
   def game_state
-    @waiting_players = []
-    @mission_status_text = ''
+    @current_hash = game_state_hash_code
   end
 
   def current_action
@@ -118,6 +117,7 @@ class PlayerAssignmentsController < ApplicationController
    end
 
   def game_log
+    @current_hash = game_state_hash_code
   end
 
   def update_status
@@ -151,6 +151,6 @@ class PlayerAssignmentsController < ApplicationController
     def game_state_hash_code
       gs = game_state_hash
       hash_code = 0
-      gs.keys.sort.each_with_index{|key, index| hash_code += ((1 << index) * key)}
+      gs.keys.sort.each_with_index{|key, index| hash_code += ((1 << index) * (gs[key] ? 1 : 0))}
     end
 end

@@ -11,9 +11,7 @@ Rails.application.routes.draw do
     get 'revealed_info', on: :member
     get 'game_state', on: :member
     get 'current_action', on: :member
-    post 'team_vote', on: :member
-    post 'assign_team', on: :member
-    post 'mission_vote', on: :member
+    get 'update_status', on: :member
     get 'game_log', on: :member
     post 'assassinate', on: :member
   end
