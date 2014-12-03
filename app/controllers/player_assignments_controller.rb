@@ -1,5 +1,5 @@
 class PlayerAssignmentsController < ApplicationController
-  before_action :set_player_assignment, only: [:show, :edit, :update, :destroy, :revealed_info, :game_state, :current_action, :game_log, :assassinate]
+  before_action :set_player_assignment, only: [:show, :edit, :update, :destroy, :revealed_info, :game_state, :current_action, :game_log, :assassinate, :update_status]
   layout 'logged_in'
 
   # GET /player_assignments
@@ -69,7 +69,8 @@ class PlayerAssignmentsController < ApplicationController
         faction: lady.target.role.faction
       }
     }
-    @revealed += (@player_assignment.visible_relationships.select{|hash| !@revealed.include? hash[:player]})
+    players = @revealed.map{|r| r[:player]}
+    @revealed += (@player_assignment.visible_relationships.select{|hash| !players.include? hash[:player]})
   end
 
   def assassinate
@@ -88,20 +89,12 @@ class PlayerAssignmentsController < ApplicationController
   end
 
   def current_action
-    is_king = @player_assignment == @player_assignment.game.current_king
-    is_questing = @player_assignment.game.current_team.team_assignments.any? {|assignment| assignment.player_assignment == @player_assignment}
-    current_lady = @player_assignment.game.current_mission.lady
-    is_lady = (!current_lady.nil? and @player_assignment == current_lady.source)
-    lady_complete = (current_lady.nil? or !current_lady.target.nil?)
-    team_assigned = @player_assignment.game.current_team.assignments_complete?
-    voting_complete = @player_assignment.game.current_team.team_voting_complete?
-    mission_complete = @player_assignment.game.current_team.mission_voting_complete?
-
+    state = game_state_hash
     @renders = {}
-    @renders[:ladies] = (is_lady and not team_assigned and not lady_complete)
-    @renders[:team_assignments] = (is_king and lady_complete and not voting_complete)
-    @renders[:team_votes] = (team_assigned and not voting_complete)
-    @renders[:mission_votes] = (team_assigned and voting_complete and is_questing and not mission_complete)
+    @renders[:ladies] = (state[:is_lady] and not state[:team_assigned] and not state[:lady_complete])
+    @renders[:team_assignments] = (state[:is_king] and state[:lady_complete] and not state[:voting_complete])
+    @renders[:team_votes] = (state[:team_assigned] and not state[:voting_complete])
+    @renders[:mission_votes] = (state[:team_assigned] and state[:voting_complete] and state[:is_questing] and not state[:mission_complete])
 
     if @renders[:ladies]
       @lady = @player_assignment.game.current_lady
@@ -120,12 +113,16 @@ class PlayerAssignmentsController < ApplicationController
 
     if @renders[:mission_votes]
       @team_assignment = (TeamAssignment.where(current_team_current_player).first or TeamAssignment.new(current_team_current_player))
-      logger.info @team_assignment
     end
 
    end
 
   def game_log
+  end
+
+  def update_status
+    new_hash = game_state_hash_code
+    res = (params[:current_hash_code] != game_state_hash_code) ? {hash_code: new_hash, redirect: current_action_player_assignment_path(@player_assignment)} : {hash_code: new_hash}
   end
 
   private
@@ -142,9 +139,18 @@ class PlayerAssignmentsController < ApplicationController
     def game_state_hash
       is_king = @player_assignment == @player_assignment.game.current_king
       is_questing = @player_assignment.game.current_team.team_assignments.any? {|assignment| assignment.player_assignment == @player_assignment}
+      current_lady = @player_assignment.game.current_mission.lady
+      is_lady = (!current_lady.nil? and @player_assignment == current_lady.source)
+      lady_complete = (current_lady.nil? or !current_lady.target.nil?)
       team_assigned = @player_assignment.game.current_team.assignments_complete?
       voting_complete = @player_assignment.game.current_team.team_voting_complete?
       mission_complete = @player_assignment.game.current_team.mission_voting_complete?
-      {is_king: is_king, is_questing: is_questing, team_assigned: team_assigned, voting_complete: voting_complete, mission_complete: mission_complete}
+      {is_king: is_king, is_questing: is_questing, is_lady: is_lady, lady_complete: lady_complete, team_assigned: team_assigned, voting_complete: voting_complete, mission_complete: mission_complete}
+    end
+
+    def game_state_hash_code
+      gs = game_state_hash
+      hash_code = 0
+      gs.keys.sort.each_with_index{|key, index| hash_code += ((1 << index) * key)}
     end
 end

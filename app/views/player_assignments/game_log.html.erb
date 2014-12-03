@@ -1,10 +1,17 @@
 <% 
   team_count = @player_assignment.game.teams.count 
   player_count = @player_assignment.game.player_assignments.count
+  assassin_target = @player_assignment.game.assassinated_assignment
   current_count = 1
 %>
+<% unless assassin_target.nil? %>
+  <h3>Assassin targeted <%= assassin_target.player.name %> who was <%= 'not' if assassin_target.role.name != 'Merlin' %> Merlin</h3>
+<% end %>
 <% @player_assignment.game.missions.reverse.each do |mission| %>
   <h3>Mission #<%= mission.mission_number + 1 %> - <%= mission.capacity.capacity %> Players</h3>
+  <% unless mission.lady.nil? or mission.lady.target.nil? %>
+    <%= mission.lady.source.player.name %> used the Lady of the Lake on <%= mission.lady.target.player.name %><br />
+  <% end %>
   <% mission.teams.reverse.each do |team| %>
     <% if team.assignments_complete? %>
       Team of <%= team.team_assignments.map{|ta| ta.player_assignment.player.name }.to_sentence %> was proposed by <%= @player_assignment.game.player_assignments.where(seat_number: (team_count - current_count) % player_count).first.player.name %><br />
