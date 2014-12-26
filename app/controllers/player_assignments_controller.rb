@@ -1,6 +1,6 @@
 class PlayerAssignmentsController < ApplicationController
   before_action :set_player_assignment, only: [:show, :edit, :update, :destroy, :revealed_info, :game_state, :current_action, :game_log, :assassinate, :update_status]
-  layout 'logged_in'
+  layout 'game'
 
   # GET /player_assignments
   # GET /player_assignments.json

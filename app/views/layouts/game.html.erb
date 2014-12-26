@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>ResistanceGame</title>
+    <title>Resistance Game</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
@@ -16,7 +16,7 @@
           <%= link_to 'Current Action', current_action_player_assignment_path(@player_assignment), {class: 'list-group-item'} %>
           <%= link_to 'Game Log', game_log_player_assignment_path(@player_assignment), {class: 'list-group-item'} %>
           <%= link_to 'Revealed Info', revealed_info_player_assignment_path(@player_assignment), {class: 'list-group-item'} %>
-          <%= link_to 'Log Out', root_path, {class: 'list-group-item'} %>
+          <%= link_to 'Log Out', dashboard_player_path(@player_assignment.player), {class: 'list-group-item'} %>
         </div>
       </div>
       <div id='content'>
