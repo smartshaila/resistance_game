@@ -104,7 +104,7 @@ class Game < ActiveRecord::Base
     elsif !current_team.mission_voting_complete?
       "Waiting for #{current_team.team_assignments.where(pass: nil).map{|assignment| assignment.player_assignment.player.name}.to_sentence} to vote on the mission..."
     else
-      assassin = self.player_assignments.select{|pa| pa.role.name == 'Assassin'}
+      assassin = self.player_assignments.select{|pa| pa.role.name == 'Assassin'}.first
       "Waiting for #{assassin.player.name} to kill someone..."
     end
   end

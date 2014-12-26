@@ -10,27 +10,16 @@
       </ul>
     </div>
   <% end %>
-  <div class="form-group">
-    <p>
+  <div class="form-group" data-toggle="buttons" data-bind="checkbox: checkboxArray">
+    <label class="btn btn-primary btn-block">
       <%= f.check_box :public_vote %> Enable Public Voting
-    </p>
-    <p>
+    </label>
+    <label class="btn btn-primary btn-block">
       <%= f.check_box :public_lancelot_switch %> Enable Public Lancelot Switch
-    </p>
+    </label>
   </div>
   <div id="outer_player_and_role_div">
     <p>Add Players and Roles:</p>
-  </div>
-  <div style="display:none;">
-    <div id="source_row" class="form-group form-inline">
-      <select name='players[]' class="form-control ">
-        <%= options_from_collection_for_select Player.all, 'id', 'name' %>
-      </select>
-      <select name='roles[]' class="form-control">
-        <%= options_from_collection_for_select Role.all, 'id', 'name' %>
-      </select>
-      <input type="button" class="btn btn-danger btn-sm" onclick="$(this)[0].parentElement.remove()" value="Remove">
-    </div>
   </div>
   <p>
     <input type="button" class="btn btn-default btn-sm" onclick="$('#source_row').clone().attr('id', null).appendTo('#outer_player_and_role_div')" value="Add New">
@@ -39,3 +28,14 @@
     <%= f.submit class:"btn btn-primary" %>
   </p>
 <% end %>
+<div style="display:none;">
+  <div id="source_row" class="form-group form-inline">
+    <select name='players[]' class="form-control ">
+      <%= options_from_collection_for_select Player.all, 'id', 'name' %>
+    </select>
+    <select name='roles[]' class="form-control">
+      <%= options_from_collection_for_select Role.all, 'id', 'name' %>
+    </select>
+    <input type="button" class="btn btn-danger btn-sm" onclick="$(this)[0].parentElement.remove()" value="Remove">
+  </div>
+</div>
