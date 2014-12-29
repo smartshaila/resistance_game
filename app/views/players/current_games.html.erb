@@ -1,0 +1,16 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Logged in as:</strong>
+  <%= @player.name %>
+</p>
+
+<div class="form-group form-inline">
+  <%= form_tag({controller: 'players', action: 'join_game'}, {method: 'post'}) do %>
+    <p>
+      <%= select(:player_assignment_id, '', @available_assignments.map{|aa| [aa.game.id, aa.id]}, {prompt: 'Select a Game', selected: nil}, {id: 'player_assignment_id', class: 'form-control'}) %>
+      <%= submit_tag 'Join', {class: "btn btn-default"} %>
+    </p>
+  <% end %>
+</div>
+

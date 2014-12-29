@@ -10,7 +10,7 @@ class LoginController < ApplicationController
     else
       player = Player.find(p).first
       if player.calculate_password_hash(params[:password]) == player.password_hash
-        redirect_to controller: :players, action: :dashboard, id: p
+        redirect_to controller: :players, action: :current_games, id: p
       else
         redirect_to action: :index
       end

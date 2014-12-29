@@ -18,7 +18,8 @@ Rails.application.routes.draw do
   resources :roles
   resources :factions
   resources :players do
-    get 'dashboard', on: :member
+    get 'current_games', on: :member
+    post 'join_game', on: :member
   end
   resources :games
   get 'login', to: 'login#index'

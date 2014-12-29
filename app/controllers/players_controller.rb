@@ -1,5 +1,5 @@
 class PlayersController < ApplicationController
-  before_action :set_player, only: [:show, :edit, :update, :destroy, :dashboard]
+  before_action :set_player, only: [:show, :edit, :update, :destroy, :current_games]
   layout 'player'
 
   # GET /players
@@ -66,6 +66,20 @@ class PlayersController < ApplicationController
     respond_to do |format|
       format.html { redirect_to players_url, notice: 'Player was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def current_games
+    @available_assignments = @player.player_assignments.select{|pa| !pa.game.complete?}
+  end
+
+  def join_game
+    pa = params[:player_assignment_id]
+
+    if pa.empty?
+      redirect_to action: :current_games
+    else
+      redirect_to controller: :player_assignments, action: :game_state, id: pa
     end
   end
 
