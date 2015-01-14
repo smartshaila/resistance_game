@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   resources :factions
   resources :players do
     get 'current_games', on: :member
+    get 'archived_games', on: :member
     post 'join_game', on: :member
   end
   resources :games

@@ -13,7 +13,7 @@
       <div class="sidebar-offcanvas" id="sidebar" role="navigation">
         <div id='navigation' class='list-group'>
           <%= link_to 'Current Games', current_games_player_path(@player), {class: 'list-group-item'} %>
-          <%= link_to 'Archived Games', edit_player_path(@player), {class: 'list-group-item'} %>
+          <%= link_to 'Archived Games', archived_games_player_path(@player), {class: 'list-group-item'} %>
           <%= link_to 'Graphs', edit_player_path(@player), {class: 'list-group-item'} %>
           <%= link_to 'Account Info', edit_player_path(@player), {class: 'list-group-item'} %>
           <%= link_to 'Log Out', root_path, {class: 'list-group-item'} %>

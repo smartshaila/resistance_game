@@ -1,5 +1,5 @@
 class PlayersController < ApplicationController
-  before_action :set_player, only: [:show, :edit, :update, :destroy, :current_games]
+  before_action :set_player, only: [:show, :edit, :update, :destroy, :current_games, :archived_games]
   layout 'player'
 
   # GET /players
@@ -71,6 +71,10 @@ class PlayersController < ApplicationController
 
   def current_games
     @available_assignments = @player.player_assignments.select{|pa| !pa.game.complete?}
+  end
+
+  def archived_games
+    @archived_games = @player.player_assignments.select{|pa| pa.game.complete?}.map{|pa| pa.game}
   end
 
   def join_game
