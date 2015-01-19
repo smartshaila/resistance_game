@@ -1,26 +1,40 @@
-<h4>You (<%= @player_assignment.player.name %>) are <strong><%= @player_assignment.role.name %></strong></h4>
-<p>
-  <%=image_tag("#{@player_assignment.role.name.downcase}.png") %>
-</p>
+<script>
+  $( document ).ready(function() {
+    $('#reveal_toggle').on("click", function() {
+       $('#revealed_content').toggle()
+    });
+  });
+</script>
 
-<% if @revealed.size != 0 %>
-  <table class="table table-bordered">
-    <tr>
-      <td><strong>Revealed</strong></td>
-    </tr>
-    <% @revealed.each do |info| %>
+<div id="reveal_toggle" class="btn btn-default">
+  <h4>Show/Hide Revealed Information</h4>
+</div>
+<br><br>
+<div id ="revealed_content" style="display:none;">
+  <h4>You (<%= @player_assignment.player.name %>) are <strong><%= @player_assignment.role.name %></strong></h4>
+  <p>
+    <%=image_tag("#{@player_assignment.role.name.downcase}.png") %>
+  </p>
+
+  <% if @revealed.size != 0 %>
+    <table class="table table-bordered">
       <tr>
-        <td class="revealed_<%= info[:faction].nil? ? 'unknown' : info[:faction].name.downcase %>"><%= info[:player].name %></td>
+        <td><strong>Revealed</strong></td>
       </tr>
-    <% end %>
-  </table>
-<% end %>
-
-<% if @player_assignment.role.name == 'Assassin' and !@player_assignment.game.assassinated_assignment %>
-  <%= form_tag({controller: 'player_assignments', action:'assassinate'}, {method: 'post', class: 'form-inline'}) do %>
-    <% hit_list = @player_assignment.game.player_assignments.to_a.select{|pa| (pa.role.faction.name == 'Good' or pa.role.name == 'Oberon')} %>
-    <%= select('hit_list', '', hit_list.map{|pa| [pa.player.name, pa.id]}, {prompt: 'Select a Player'}, {class: 'form-control form-group'}) %>
-    <%= hidden_field_tag :player_assignment_redirect, @player_assignment.id if @player_assignment %>
-    <%= submit_tag 'Assassinate', {class: "btn btn-primary"} %>
+      <% @revealed.each do |info| %>
+        <tr>
+          <td class="revealed_<%= info[:faction].nil? ? 'unknown' : info[:faction].name.downcase %>"><%= info[:player].name %></td>
+        </tr>
+      <% end %>
+    </table>
   <% end %>
-<% end %>
+
+  <% if @player_assignment.role.name == 'Assassin' and !@player_assignment.game.assassinated_assignment %>
+    <%= form_tag({controller: 'player_assignments', action:'assassinate'}, {method: 'post', class: 'form-inline'}) do %>
+      <% hit_list = @player_assignment.game.player_assignments.to_a.select{|pa| (pa.role.faction.name == 'Good' or pa.role.name == 'Oberon')} %>
+      <%= select('hit_list', '', hit_list.map{|pa| [pa.player.name, pa.id]}, {prompt: 'Select a Player'}, {class: 'form-control form-group'}) %>
+      <%= hidden_field_tag :player_assignment_redirect, @player_assignment.id if @player_assignment %>
+      <%= submit_tag 'Assassinate', {class: "btn btn-primary"} %>
+    <% end %>
+  <% end %>
+</div>
