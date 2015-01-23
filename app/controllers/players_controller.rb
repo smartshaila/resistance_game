@@ -1,5 +1,5 @@
 class PlayersController < ApplicationController
-  before_action :set_player, only: [:show, :edit, :update, :destroy, :current_games, :archived_games]
+  before_action :set_player, only: [:show, :edit, :update, :destroy, :current_games, :archived_games, :graphs]
   layout 'player'
 
   # GET /players
@@ -75,6 +75,15 @@ class PlayersController < ApplicationController
 
   def archived_games
     @archived_games = @player.player_assignments.select{|pa| pa.game.complete?}.map{|pa| pa.game}
+  end
+
+  def graphs
+    @completed_games = Game.all.select{|g| g.complete?}
+    @games_by_date = @completed_games.group_by{|game|
+      game.created_at.to_date
+    }.map{|d,g|
+      [d, g.count]
+    }
   end
 
   def join_game

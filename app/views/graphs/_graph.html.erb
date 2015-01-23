@@ -1,0 +1,9 @@
+<%= javascript_include_tag "https://code.highcharts.com/highcharts.js", "chartkick" %>
+
+<p>
+  <strong>Show Graphs</strong>
+</p>
+<p>
+  <%= @completed_games %>
+</p>
+<%= line_chart @games_by_date%>

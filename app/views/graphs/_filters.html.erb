@@ -1,0 +1,8 @@
+<p>
+  <strong>Set Filters</strong>
+</p>
+
+<%=form_tag({controller: 'graphs', action: 'apply'}, {method: 'post'}) do %>
+  <p><%= select(:player_id, '', @players.map{|p| [p.name, p.id]}, {prompt: 'Select a Player', selected: nil}, {id: 'player_id', class: 'form-control'}) %></p>
+  <p><%= submit_tag 'Submit', {class: "btn btn-default"} %></p>
+<% end %>
