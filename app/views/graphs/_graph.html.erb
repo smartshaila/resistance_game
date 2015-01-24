@@ -1,6 +1,16 @@
 <%= javascript_include_tag "https://code.highcharts.com/highcharts.js", "chartkick" %>
 
 <p>
-  <strong>Show Graphs</strong>
+  <strong>Graphs and Stuff!</strong>
 </p>
-<%= line_chart @games_by_date%>
+<% if @graph_data.empty? %>
+  <h3>
+    No Graph Data Available
+  </h3>
+<% else %>
+  <% if @graph_type == :line %>
+    <%= line_chart @graph_data %>
+  <% elsif @graph_type == :bar %>
+    <%= bar_chart @graph_data, colors: ["#6699cc"] %>
+  <% end %>
+<% end %>
