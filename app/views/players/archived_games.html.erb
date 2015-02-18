@@ -19,18 +19,18 @@
       </tr>
     </thead>
     <% @archived_games.each do |game| %>
-    <tr>
-      <td><%= game.created_at.strftime("%b %d, %Y") %></td>
-      <td><%= game.created_at.getlocal.strftime("%l:%M %p") %></td>
-      <td><%= game.players.size %></td>
-      <td><%= game.player_assignments.select{|pa| pa.player == @player}.first.winner? ? 'Yes' : 'No' %></td>
-      <td><%= game.status.gsub('Game over. ', '') %></td>
-      <td><%= raw game.player_assignments.map{|pa| pa.role.name + (pa.player == @player ? '*' : '')}
-              .uniq.sort.to_sentence
-              .gsub(/, (and )?([A-Za-z ]+?)\*/, ', \1<b>\2</b>')
-              .gsub(/^([\w ]+?)\*/, '<b>\1</b>') %></td>
-      <td><%= game.public_vote ? 'Yes' : 'No'%></td>
-    </tr>
+      <tr>
+        <td><%= game.created_at.strftime("%b %d, %Y") %></td>
+        <td><%= game.created_at.getlocal.strftime("%l:%M %p") %></td>
+        <td><%= game.players.size %></td>
+        <td><%= game.player_assignments.select{|pa| pa.player == @player}.first.winner? ? 'Yes' : 'No' %></td>
+        <td><%= game.status.gsub('Game over. ', '') %></td>
+        <td><%= raw game.player_assignments.map{|pa| pa.role.name + (pa.player == @player ? '*' : '')}
+                .uniq.sort.to_sentence
+                .gsub(/, (and )?([A-Za-z ]+?)\*/, ', \1<b>\2</b>')
+                .gsub(/^([\w ]+?)\*/, '<b>\1</b>') %></td>
+        <td><%= game.public_vote ? 'Yes' : 'No'%></td>
+      </tr>
     <% end %>
   </table>
 
