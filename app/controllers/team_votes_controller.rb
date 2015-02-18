@@ -1,5 +1,6 @@
 class TeamVotesController < ApplicationController
   before_action :set_team_vote, only: [:show, :edit, :update, :destroy]
+  layout 'admin'
 
   # GET /team_votes
   # GET /team_votes.json

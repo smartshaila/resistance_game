@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 <%= form_tag({controller: 'login', action: 'login'}, {method: 'post'}) do %>
-  <p><%= select(:player_id, '', @players.map{|p| [p.name, p.id]}, {prompt: 'Select a Player', selected: nil}, {id: 'player_id', class: 'form-control'}) %></p>
+  <p><%= select_tag(:player_id, options_for_select(@players.map{|p| [p.name, p.id]}), {prompt: 'Select a Player', id: 'player_id', class: 'form-control'}) %></p>
   <p><%= password_field_tag(:password, nil, placeholder: 'Password', class: 'form-control') %></p>
   <p><%= submit_tag 'Login', {class: "btn btn-default btn-lg"} %></p>
 <% end %>

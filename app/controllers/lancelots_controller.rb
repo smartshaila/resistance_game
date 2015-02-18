@@ -1,5 +1,6 @@
 class LancelotsController < ApplicationController
   before_action :set_lancelot, only: [:show, :edit, :update, :destroy]
+  layout 'admin'
 
   # GET /lancelots
   # GET /lancelots.json

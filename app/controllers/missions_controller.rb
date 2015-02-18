@@ -1,5 +1,6 @@
 class MissionsController < ApplicationController
   before_action :set_mission, only: [:show, :edit, :update, :destroy]
+  layout 'admin'
 
   # GET /missions
   # GET /missions.json

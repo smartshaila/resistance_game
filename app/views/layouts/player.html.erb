@@ -16,6 +16,9 @@
           <%= link_to 'Archived Games', archived_games_player_path(@player), {class: 'list-group-item'} %>
           <%= link_to 'Graphs', {controller: 'graphs', action: 'index', player_id: @player}, {class: 'list-group-item'} %>
           <%= link_to 'Account Info', edit_player_path(@player), {class: 'list-group-item'} %>
+          <% if @player.is_admin? %>
+            <%= link_to 'Admin', games_path, {class: 'list-group-item'} %>
+          <% end %>
           <%= link_to 'Log Out', root_path, {class: 'list-group-item'} %>
         </div>
       </div>

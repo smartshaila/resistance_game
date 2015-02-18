@@ -1,6 +1,6 @@
 class PlayersController < ApplicationController
   before_action :set_player, only: [:show, :edit, :update, :destroy, :current_games, :archived_games, :graphs]
-  layout 'player'
+  layout 'admin'
 
   # GET /players
   # GET /players.json
@@ -21,6 +21,7 @@ class PlayersController < ApplicationController
 
   # GET /players/1/edit
   def edit
+    render layout: 'player'
   end
 
   # POST /players
@@ -50,7 +51,7 @@ class PlayersController < ApplicationController
 
     respond_to do |format|
       if @player.update(player_params)
-        format.html { redirect_to @player, notice: 'Player was successfully updated.' }
+        format.html { redirect_to({action: 'edit', id: @player.id}, notice: 'Player was successfully updated.') }
         format.json { render :show, status: :ok, location: @player }
       else
         format.html { render :edit }
@@ -71,10 +72,12 @@ class PlayersController < ApplicationController
 
   def current_games
     @available_assignments = @player.player_assignments.select{|pa| !pa.game.complete?}
+    render layout: 'player'
   end
 
   def archived_games
     @archived_games = @player.player_assignments.select{|pa| pa.game.complete?}.map{|pa| pa.game}
+    render layout: 'player'
   end
 
   def graphs
@@ -84,6 +87,7 @@ class PlayersController < ApplicationController
     }.map{|d,g|
       [d, g.count]
     }
+    render layout: 'player'
   end
 
   def join_game

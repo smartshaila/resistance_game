@@ -1,5 +1,6 @@
 class MissionCapacitiesController < ApplicationController
   before_action :set_mission_capacity, only: [:show, :edit, :update, :destroy]
+  layout 'admin'
 
   # GET /mission_capacities
   # GET /mission_capacities.json

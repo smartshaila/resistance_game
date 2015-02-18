@@ -1,5 +1,6 @@
 class LadiesController < ApplicationController
   before_action :set_lady, only: [:show, :edit, :update, :destroy]
+  layout 'admin'
 
   # GET /ladies
   # GET /ladies.json

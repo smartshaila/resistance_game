@@ -1,5 +1,6 @@
 class TeamAssignmentsController < ApplicationController
   before_action :set_team_assignment, only: [:show, :edit, :update, :destroy]
+  layout 'admin'
 
   # GET /team_assignments
   # GET /team_assignments.json

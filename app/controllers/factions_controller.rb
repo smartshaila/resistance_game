@@ -1,5 +1,6 @@
 class FactionsController < ApplicationController
   before_action :set_faction, only: [:show, :edit, :update, :destroy]
+  layout 'admin'
 
   # GET /factions
   # GET /factions.json

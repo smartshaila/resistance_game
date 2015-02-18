@@ -1,5 +1,6 @@
 class RoleRelationshipsController < ApplicationController
   before_action :set_role_relationship, only: [:show, :edit, :update, :destroy]
+  layout 'admin'
 
   # GET /role_relationships
   # GET /role_relationships.json
