@@ -3,7 +3,8 @@
 </p>
 
 <%=form_tag({controller: 'graphs', action: 'apply'}, {method: 'post'}) do %>
-  <p><%= select(:graph_group, '', options_for_select([["Win/Loss", "win_loss"], ["Game Frequency", "frequency"]]), {prompt: 'Select Data for Graph', selected: nil}, {id: 'graph_group', class: 'form-control'}) %></p>
-  <p><%= select(:player_id, '', @players.map{|p| [p.name, p.id]}, {prompt: 'Select Player', selected: nil}, {id: 'player_id', class: 'form-control'}) %></p>
+  <p><%= select_tag(:graph_group, options_for_select([["Win/Loss", "win_loss"], ["Game Frequency", "frequency"]]), {prompt: 'Select Data for Graph', id: 'graph_group', class: 'form-control'}) %></p>
+  <p><%= select_tag(:player_id, options_for_select(@players.map{|p| [p.name, p.id]}, (@player.id unless @player.nil?)), {prompt: 'Select Player', id: 'player_id', class: 'form-control'}) %></p>
+  <p><%= select_tag(:role_id, options_for_select(@roles.map{|r| [r.name, r.id]}), {prompt: 'Select Role', id: 'role_id', class: 'form-control'}) %></p>
   <p><%= submit_tag 'Submit', {class: "btn btn-default"} %></p>
 <% end %>

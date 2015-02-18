@@ -1,18 +1,21 @@
 class GraphsController < ApplicationController
+  before_action :set_player, only: [:index, :apply]
+  layout 'player'
 
   def index
     @players = Player.all
+    @roles = Role.all
+
   end
 
   def apply
 
-    @player = Player.find(params[:player_id]).first unless params[:player_id].first.empty?
     @completed_games = Game.all.select{|g| g.complete?}
     unless @player.nil?
       @completed_games = @completed_games.select{|g| g.players.to_a.include? @player}
     end
 
-    @graph_group = params[:graph_group].first
+    @graph_group = params[:graph_group]
 
     if @graph_group == "win_loss"
       @graph_type = :bar
@@ -31,6 +34,12 @@ class GraphsController < ApplicationController
     end
 
   end
+
+  private
+
+    def set_player
+      @player = Player.find(params[:player_id]) unless params[:player_id].empty?
+    end
 
 end
 
