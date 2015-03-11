@@ -41,7 +41,13 @@ class TeamAssignmentsController < ApplicationController
   # PATCH/PUT /team_assignments/1
   # PATCH/PUT /team_assignments/1.json
   def update
-    team_assignment_updated = @team_assignment.update(team_assignment_params)
+    unless @team_assignment.team.mission_voting_complete?
+      team_assignment_updated = @team_assignment.update(team_assignment_params)
+    else
+      if params.include? :player_assignment_redirect
+        format.html { redirect_to({controller: :player_assignments, action: :game_state, id: params[:player_assignment_redirect]}, {notice: 'Mission vote was not updated because all votes were in.', flash: {type: 'failure'}}) }
+      end
+    end
 
     if @team_assignment.team.mission_voting_complete?
       @team_assignment.team.mission.game.increment_mission

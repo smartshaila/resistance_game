@@ -76,7 +76,7 @@ class PlayersController < ApplicationController
   end
 
   def archived_games
-    @archived_games = @player.player_assignments.select{|pa| pa.game.complete?}.map{|pa| pa.game}
+    @archived_games = @player.player_assignments.select{|pa| pa.game.complete?}.map{|pa| pa.game}.reverse
     render layout: 'player'
   end
 

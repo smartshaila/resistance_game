@@ -26,17 +26,21 @@ class Game < ActiveRecord::Base
   end
 
   def increment_mission
-    half_of_missions = mission_capacities.size * 0.5
-    unless [self.missions.to_a.count {|m| m.result }, self.missions.to_a.count {|m| m.result == false }].any? {|r| r > half_of_missions}
-      m = Mission.create(game: self, mission_number: self.missions.size)
-      Team.create(mission: m)
-      if self.ladies.empty?
-        Lady.create(game: self, mission_number: half_of_missions.floor, source: self.player_assignments.max_by(&:seat_number))
+    unless Rails.application.config.locked_games.include? self.id
+      Rails.application.config.locked_games << self.id
+      half_of_missions = mission_capacities.size * 0.5
+      unless [self.missions.to_a.count {|m| m.result }, self.missions.to_a.count {|m| m.result == false }].any? {|r| r > half_of_missions}
+        m = Mission.create(game: self, mission_number: self.missions.size)
+        Team.create(mission: m)
+        if self.ladies.empty?
+          Lady.create(game: self, mission_number: half_of_missions.floor, source: self.player_assignments.max_by(&:seat_number))
+        end
+        l = self.ladies.where(mission_number: m.mission_number-1)
+        unless l.empty? or l.first.target.nil?
+          Lady.create(game: self, mission_number: m.mission_number, source: l.first.target)
+        end
       end
-      l = self.ladies.where(mission_number: m.mission_number-1)
-      unless l.empty? or l.first.target.nil?
-        Lady.create(game: self, mission_number: m.mission_number, source: l.first.target)
-      end
+      Rails.application.config.locked_games.delete(self.id)
     end
   end
 
@@ -74,7 +78,7 @@ class Game < ActiveRecord::Base
 
   def winning_faction
     if self.complete?
-      if (mission_results[true] or 0) > (mission_results[false] or 0) and (!self.assassinated_assignment.nil? and self.assassinated_assignment.role.name != 'Merlin')
+      if !self.assassinated_assignment.nil? and self.assassinated_assignment.role.name != 'Merlin'
         Faction.find_by(name: 'Good')
       else
         Faction.find_by(name: 'Evil')
@@ -83,7 +87,9 @@ class Game < ActiveRecord::Base
   end
 
   def status
-    if complete?
+    if Rails.application.config.locked_games.include? self.id
+      "Server is updating, please refresh."
+    elsif complete?
       method = ''
       if !self.assassinated_assignment.nil? and self.assassinated_assignment.role.name == 'Merlin'
         method = "assassination of #{self.assassinated_assignment.player.name}"

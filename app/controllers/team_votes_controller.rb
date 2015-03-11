@@ -50,6 +50,14 @@ class TeamVotesController < ApplicationController
   # PATCH/PUT /team_votes/1
   # PATCH/PUT /team_votes/1.json
   def update
+    if params[:approve].nil?
+      @team_vote.destroy
+      if params.include? :player_assignment_redirect
+        format.html { redirect_to({controller: :player_assignments, action: :game_state, id: params[:player_assignment_redirect]}, {notice: 'Team vote was successfully updated.',  flash: {type: 'success'}}) }
+      end
+      format.html { redirect_to team_votes_url, notice: 'Team vote was successfully destroyed.' }
+      format.json { head :no_content }
+    end
     respond_to do |format|
       if @team_vote.update(team_vote_params)
         if params.include? :player_assignment_redirect
