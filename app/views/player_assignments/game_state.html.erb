@@ -30,9 +30,11 @@
     <div class="current_mission">
       <strong>Current Mission:</strong> Mission #<%= @player_assignment.game.current_mission.mission_number + 1 %>
     </div>
-    <div class="current_lady">
-      <strong>Current Lady:</strong> <%= @player_assignment.game.current_lady.source.player.name.capitalize %>
-    </div>
+    <% unless @player_assignment.game.current_lady.nil? %>
+      <div class="current_lady">
+        <strong>Current Lady:</strong> <%= @player_assignment.game.current_lady.source.player.name.capitalize %>
+      </div>
+    <% end %>
     <br>
   </div>
 </div>
