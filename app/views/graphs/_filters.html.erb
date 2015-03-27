@@ -1,22 +1,36 @@
 <script>
   $( document ).ready(function() {
+    perspectives = ['#player_perspective_select', '#role_perspective_select', '#faction_perspective_select'];
     $('#source_row').clone().attr('id', null).appendTo('#outer_player_assignments_filters_div');
+    $('#graph_perspective').change(function(value) {
+      perspectives.forEach(function(p) {
+        $(p).hide();
+      });
+      $('#' + $(this).val() + '_perspective_select').show();
+    })
   });
 </script>
 
 <h4><strong>Select Graph Criteria</strong></h4>
 
 <%=form_tag({controller: 'graphs', action: 'apply'}, {method: 'post'}) do %>
-  <p><%= select_tag(:graph_perspective, options_for_select([["Player", "player"], ["Role", "role"], ["Faction", "faction"]]), {prompt: 'Select Perspective for Graph', id: 'graph_perspective', class: 'form-control'}) %></p>
-  <p>Select Player<%= select_tag('perspective[player]', options_for_select(@players.map{|p| [p.name, p.id]}, (@player.id unless @player.nil?)), {prompt: 'Select Player', class: 'form-control'}) %></p>
-  <p>Select Role<%= select_tag('perspective[role]', options_for_select(@roles.map{|r| [r.name, r.id]}), {prompt: 'Select Role', class: 'form-control'}) %></p>
-  <p>Select Faction<%= select_tag('perspective[faction]', options_for_select(@factions.map{|f| [f.name, f.id]}), {prompt: 'Select Faction', class: 'form-control'}) %></p>
-  <p><%= select_tag(:graph_grouping, options_for_select([["Player", "player"], ["Role", "role"], ["Faction", "faction"], ["Player Count", "player_count"], ["Win Method", "win_method"]]), {prompt: 'Select Grouping for Graph', id: 'graph_grouping', class: 'form-control'}) %></p>
+  <div class="form-group form-inline">
+    <%= select_tag(:graph_perspective, options_for_select([["Player", "player"], ["Role", "role"], ["Faction", "faction"]]), {prompt: 'Select Perspective for Graph', id: 'graph_perspective', class: 'form-control'}) %>
+    <%= select_tag('perspective[player]', options_for_select(@players.map{|p| [p.name, p.id]}, (@player.id unless @player.nil?)), {prompt: 'Select Player', id: 'player_perspective_select', style: 'display:none', class: 'form-control'}) %>
+    <%= select_tag('perspective[role]', options_for_select(@roles.map{|r| [r.name, r.id]}), {prompt: 'Select Role', id: 'role_perspective_select', style: 'display:none', class: 'form-control'}) %>
+    <%= select_tag('perspective[faction]', options_for_select(@factions.map{|f| [f.name, f.id]}), {prompt: 'Select Faction', id: 'faction_perspective_select', style: 'display:none', class: 'form-control'}) %>
+  </div>
+  <div class="form-group form-inline">
+    <%= select_tag(:graph_grouping, options_for_select([["Player", "player"], ["Role", "role"], ["Faction", "faction"], ["Player Count", "player_count"], ["Win Method", "win_method"]]), {prompt: 'Select Grouping for Graph', id: 'graph_grouping', class: 'form-control'}) %>
+  </div>
   <p>
      <strong>Game Filters</strong>
   </p>
-  <p><%= select_tag(:filter_game_date, options_for_select(@games.map{|g| g.created_at.to_date}.uniq), {prompt: 'Set a Date', id: 'filter_game_date', class: 'form-control'}) %></p>
-  <p><%= select_tag(:filter_game_public_vote, options_for_select([["Yes", "yes_public_vote"], ["No", "no_public_vote"]]), {prompt: 'Public Voting', id: 'filter_game_public_vote', class: 'form-control'}) %></p>
+  <div class="form-group form-inline">
+    <%= select_tag(:filter_game_date, options_for_select(@games.map{|g| g.created_at.to_date}.uniq), {prompt: 'Set a Date', id: 'filter_game_date', class: 'form-control'}) %>
+    <%= select_tag(:filter_game_public_vote, options_for_select([["Yes", "yes_public_vote"], ["No", "no_public_vote"]]), {prompt: 'Public Voting', id: 'filter_game_public_vote', class: 'form-control'}) %>
+  </div>
+
   <div id="outer_player_assignments_filters_div">
     <p>
        <strong>Player Assignment Filters</strong>

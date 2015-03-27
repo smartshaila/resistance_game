@@ -49,36 +49,55 @@ class GraphsController < ApplicationController
     @graph_data = []
     @graph_grouping = params[:graph_grouping].to_sym
 
-    player_perspective = Player.find(params[:perspective][:player])
-
-    if params[:graph_perspective] == 'player'
-      @graph_data = player_perspective_data(@completed_games, player_perspective).group_by{|pa|
-        pa[:win]
-      }.map{|result, assignment|
-        {
-            name: result ? 'Wins' : 'Losses',
-            data: assignment.group_by{|a|
-              get_grouping_label(@graph_grouping, a[@graph_grouping])
-            }.map{|grouping, assignments|
-              [grouping, assignments.count]
-            }.sort
-        }
-      }.sort_by{|r| r[:name]}
-    end
+    @graph_data = perspective_data(@completed_games, params[:graph_perspective], params[:perspective]).group_by{|pa|
+      pa[:win]
+    }.map{|result, assignment|
+      {
+          name: result ? 'Wins' : 'Losses',
+          data: assignment.group_by{|a|
+            get_grouping_label(@graph_grouping, a[@graph_grouping])
+          }.map{|grouping, assignments|
+            [grouping, assignments.count]
+          }.sort
+      }
+    }.sort_by{|r| r[:name]}
   end
 
   private
 
-    def player_perspective_data (games, player)
+    def perspective_data (games, perspective_type, perspective_value)
+      perspective_id = perspective_value[perspective_type]
+      data = case perspective_type
+        when 'player'
+          Player.find(perspective_id)
+        when 'role'
+          Role.find(perspective_id)
+        when 'faction'
+          Faction.find(perspective_id)
+        else
+      end
+
       games.map{|g|
-        player_assignment = g.player_assignments.find{|pa| pa.player == player}
-        {
-          player_count: g.players.size,
-          role: player_assignment.role,
-          faction: player_assignment.faction,
-          win: player_assignment.faction == g.winning_faction
+        g.player_assignments.select{|pa|
+          case perspective_type
+            when 'player'
+              pa.player == data
+            when 'role'
+              pa.role == data
+            when 'faction'
+              pa.faction == data
+            else
+          end
+        }.map{|pa|
+          {
+            player: pa.player,
+            player_count: g.players.size,
+            role: pa.role,
+            faction: pa.faction,
+            win: pa.faction == g.winning_faction
+          }
         }
-      }
+      }.flatten
     end
 
     def get_grouping_label (grouping, value)
