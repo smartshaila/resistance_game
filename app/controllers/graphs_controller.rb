@@ -10,10 +10,9 @@ class GraphsController < ApplicationController
   end
 
   def apply
-
 #   Game level filters
-
     date_filter = params[:filter_game_date].to_date
+    public_vote_filter = nil
 
     if params[:filter_game_public_vote] == 'yes_public_vote'
       public_vote_filter = true
@@ -22,7 +21,6 @@ class GraphsController < ApplicationController
     end
 
 #   Player assignment filters
-
     pa_filter = params['player_assignments']['player_id'].zip(
         params['player_assignments']['role_id'],
         params['player_assignments']['faction_id']).map {|f|
@@ -47,27 +45,53 @@ class GraphsController < ApplicationController
       }
     }
 
-#    @graph_group = params[:graph_group]
+    @graph_type = :column
+    @graph_data = []
+    @graph_grouping = params[:graph_grouping].to_sym
 
-#    if @graph_group == "win_loss"
-      @graph_type = :bar
-      @graph_data = @completed_games.group_by{|game|
-        game.winning_faction
-      }.map{|f,g|
-        [f.name, g.count]
-      }
-#    elsif @graph_group == "frequency"
-#      @graph_type = :line
-#      @graph_data = @completed_games.group_by{|game|
-#        game.created_at.to_date
-#      }.map{|d,g|
-#        [d, g.count]
-#      }
-#    end
+    player_perspective = Player.find(params[:perspective][:player])
 
+    if params[:graph_perspective] == 'player'
+      @graph_data = player_perspective_data(@completed_games, player_perspective).group_by{|pa|
+        pa[:win]
+      }.map{|result, assignment|
+        {
+            name: result ? 'Wins' : 'Losses',
+            data: assignment.group_by{|a|
+              get_grouping_label(@graph_grouping, a[@graph_grouping])
+            }.map{|grouping, assignments|
+              [grouping, assignments.count]
+            }.sort
+        }
+      }.sort_by{|r| r[:name]}
+    end
   end
 
   private
+
+    def player_perspective_data (games, player)
+      games.map{|g|
+        player_assignment = g.player_assignments.find{|pa| pa.player == player}
+        {
+          player_count: g.players.size,
+          role: player_assignment.role,
+          faction: player_assignment.faction,
+          win: player_assignment.faction == g.winning_faction
+        }
+      }
+    end
+
+    def get_grouping_label (grouping, value)
+      case grouping
+        when :player, :role, :faction
+          value.name
+        when :player_count
+          "#{value} players"
+        when :win_method
+          value
+        else
+      end
+    end
 
     def set_params
       @player = Player.find(params[:player_id]) unless params[:player_id].nil?

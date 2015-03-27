@@ -8,6 +8,9 @@
 
 <%=form_tag({controller: 'graphs', action: 'apply'}, {method: 'post'}) do %>
   <p><%= select_tag(:graph_perspective, options_for_select([["Player", "player"], ["Role", "role"], ["Faction", "faction"]]), {prompt: 'Select Perspective for Graph', id: 'graph_perspective', class: 'form-control'}) %></p>
+  <p>Select Player<%= select_tag('perspective[player]', options_for_select(@players.map{|p| [p.name, p.id]}, (@player.id unless @player.nil?)), {prompt: 'Select Player', class: 'form-control'}) %></p>
+  <p>Select Role<%= select_tag('perspective[role]', options_for_select(@roles.map{|r| [r.name, r.id]}), {prompt: 'Select Role', class: 'form-control'}) %></p>
+  <p>Select Faction<%= select_tag('perspective[faction]', options_for_select(@factions.map{|f| [f.name, f.id]}), {prompt: 'Select Faction', class: 'form-control'}) %></p>
   <p><%= select_tag(:graph_grouping, options_for_select([["Player", "player"], ["Role", "role"], ["Faction", "faction"], ["Player Count", "player_count"], ["Win Method", "win_method"]]), {prompt: 'Select Grouping for Graph', id: 'graph_grouping', class: 'form-control'}) %></p>
   <p>
      <strong>Game Filters</strong>

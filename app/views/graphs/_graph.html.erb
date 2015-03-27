@@ -11,6 +11,8 @@
   <% if @graph_type == :line %>
     <%= line_chart @graph_data %>
   <% elsif @graph_type == :bar %>
-    <%= bar_chart @graph_data, colors: ["#6699cc"] %>
+    <%= bar_chart @graph_data %>
+  <% elsif @graph_type == :column %>
+    <%= column_chart @graph_data %>
   <% end %>
 <% end %>
