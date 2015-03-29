@@ -21,14 +21,14 @@ class GraphsController < ApplicationController
     end
 
 #   Player assignment filters
-    pa_filter = params['player_assignments']['player_id'].zip(
+    @pa_filter = params['player_assignments']['player_id'].zip(
         params['player_assignments']['role_id'],
         params['player_assignments']['faction_id']).map {|f|
       {player: (f[0].empty? ? nil : Player.find(f[0])),
        role: (f[1].empty? ? nil : Role.find(f[1])),
        faction: (f[2].empty? ? nil : Faction.find(f[2]))
       }
-    }
+    } unless @pa_filter.nil?
 
     @completed_games = Game.all.select{|g| g.complete? and
         (public_vote_filter.nil? or g.public_vote == public_vote_filter) and
@@ -36,14 +36,14 @@ class GraphsController < ApplicationController
     }
 
     @completed_games = @completed_games.select{|g|
-      pa_filter.all? {|f|
+      @pa_filter.all? {|f|
         g.player_assignments.any? {|pa|
           (f[:player].nil? or pa.player == f[:player]) and
           (f[:role].nil? or pa.role == f[:role]) and
           (f[:faction].nil? or pa.faction == f[:faction])
         }
       }
-    }
+    } unless @pa_filter.nil?
 
     @graph_type = :column
     @graph_data = []
