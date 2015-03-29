@@ -87,6 +87,7 @@ class GraphsController < ApplicationController
             when 'faction'
               pa.faction == data
             else
+              true
           end
         }.map{|pa|
           {
