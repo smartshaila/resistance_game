@@ -95,7 +95,8 @@ class GraphsController < ApplicationController
             player_count: g.players.size,
             role: pa.role,
             faction: pa.faction,
-            win: pa.faction == g.winning_faction
+            win: pa.faction == g.winning_faction,
+            win_method: g.win_method.capitalize
           }
         }
       }.flatten
@@ -119,16 +120,3 @@ class GraphsController < ApplicationController
     end
 
 end
-
-# @player_wins_by_team = @player.assignments.group_by{|a|
-#   a.winning?
-# }.map{|r,a|
-#   {
-#       name: r ? 'Wins' : 'Losses',
-#       data: a.group_by{|a|
-#         a.team.name
-#       }.map{|team,assignments|
-#         [team, assignments.count]
-#       }.sort
-#   }
-# }.sort_by{|r| r[:name]}

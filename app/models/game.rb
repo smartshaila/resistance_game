@@ -86,18 +86,28 @@ class Game < ActiveRecord::Base
     end
   end
 
+  def win_method
+    if complete?
+      if !self.assassinated_assignment.nil? and self.assassinated_assignment.role.name == 'Merlin'
+        "assassination"
+      elsif current_team.team_voting_complete? and !current_team.approved?
+        "team rejections"
+      else
+        "missions"
+      end
+    end
+  end
+
   def status
     if Rails.application.config.locked_games.include? self.id
       "Server is updating, please refresh."
     elsif complete?
-      method = ''
-      if !self.assassinated_assignment.nil? and self.assassinated_assignment.role.name == 'Merlin'
-        method = "assassination of #{self.assassinated_assignment.player.name}"
-      elsif current_team.team_voting_complete? and !current_team.approved?
-        method = "team rejections"
-      else
-        method = "missions"
+      method = self.win_method
+
+      if method == "assassination"
+        method += " of #{self.assassinated_assignment.player.name}"
       end
+
       "Game over. #{winning_faction.name} wins through #{method}!"
     elsif not current_lady.nil? and current_lady.target.nil? and current_mission.mission_number == current_lady.mission_number
       "Waiting for #{current_lady.source.player.name.capitalize} to use the Lady on someone..."
@@ -114,4 +124,5 @@ class Game < ActiveRecord::Base
       "Waiting for #{assassin.player.name} to kill someone..."
     end
   end
+
 end
