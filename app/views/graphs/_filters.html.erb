@@ -1,4 +1,22 @@
 <script>
+  function updateGraphData() {
+    $('#loading_div').show();
+    $('#chart-1').hide();
+    $('#submitButton').hide();
+    $.getJSON('/graphs',
+      $('#graph_filters').serialize(),
+      function(json) {
+        if (json['graph_type'] == 'column') {
+          new Chartkick.ColumnChart("chart-1", json['graph_data'], {});
+        }
+      }
+    ).always(function() {
+      $('#loading_div').hide();
+      $('#chart-1').show();
+      $('#submitButton').show();
+    });
+  }
+
   $( document ).ready(function() {
     perspectives = ['#player_perspective_select', '#role_perspective_select', '#faction_perspective_select'];
     $('#source_row').clone().attr('id', null).appendTo('#outer_player_assignments_filters_div');
@@ -7,13 +25,14 @@
         $(p).hide();
       });
       $('#' + $(this).val() + '_perspective_select').show();
-    })
+    });
   });
 </script>
 
 <h4><strong>Select Graph Criteria</strong></h4>
 
-<%=form_tag({controller: 'graphs', action: 'apply'}, {method: 'post'}) do %>
+<%=form_tag({controller: 'graphs', action: 'apply'}, {method: 'post', id: 'graph_filters'}) do %>
+  <input type="hidden" name="player_id" value="<%= @player.id %>" />
   <div class="form-group form-inline">
     <%= select_tag(:graph_perspective, options_for_select([["Player", "player"], ["Role", "role"], ["Faction", "faction"]]), {prompt: 'Select Perspective for Graph', id: 'graph_perspective', class: 'form-control'}) %>
     <%= select_tag('perspective[player]', options_for_select(@players.map{|p| [p.name, p.id]}, (@player.id unless @player.nil?)), {prompt: 'Select Player', id: 'player_perspective_select', style: 'display:none', class: 'form-control'}) %>
@@ -39,8 +58,7 @@
   <p>
     <input type="button" class="btn btn-default" onclick="$('#source_row').clone().attr('id', null).appendTo('#outer_player_assignments_filters_div')" value="Add New">
   </p>
-  <input type="hidden" name="player_id" value="<%= @player.id %>" />
-  <p><%= submit_tag 'Submit', {class: "btn btn-default"} %></p>
+  <p><input type="button" class="btn btn-default" value="Submit" onclick="updateGraphData()" id="submitButton"/></p>
 <% end %>
 <div style="display:none;">
   <div id="source_row" class="form-group form-inline">

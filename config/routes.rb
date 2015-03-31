@@ -27,6 +27,7 @@ Rails.application.routes.draw do
   post 'login', to: 'login#login'
   get 'graphs/:player_id', to: 'graphs#index'
   post 'graphs', to: 'graphs#apply'
+  get 'graphs', to: 'graphs#apply'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

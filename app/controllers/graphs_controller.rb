@@ -61,6 +61,13 @@ class GraphsController < ApplicationController
           }.sort
       }
     }.sort_by{|r| r[:name]}
+
+    json = {graph_type: @graph_type, graph_data: @graph_data}.to_json
+
+    respond_to do |format|
+      format.html { }
+      format.json { render json: json }
+    end
   end
 
   private

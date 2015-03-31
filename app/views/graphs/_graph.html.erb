@@ -3,10 +3,16 @@
 <p>
   <strong>Resistance Graphs</strong>
 </p>
-<% if @graph_data.empty? %>
-  <h3>
-    No Graph Data Available
-  </h3>
+<% if @graph_data.nil? or @graph_data.empty? %>
+  <!---->
+  <div id="loading_div" style="display:none">
+    <h1>LOADING DATA, IF YOU HIT SUBMIT AGAIN, YOU ARE FIRED, I MEAN IT FOR REAL</h1>
+  </div>
+  <div id="chart-1">
+    <h3>
+      No Graph Data Available
+    </h3>
+  </div>
 <% else %>
   <% if @graph_type == :line %>
     <%= line_chart @graph_data %>
